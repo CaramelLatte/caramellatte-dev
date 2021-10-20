@@ -8,10 +8,10 @@ class Home extends Component {
       <div className="content container">
         <div className="row">
           <div className="col text-wrap">
-            NEEEEEEEEEEEERDS
+            You're all a bunch of nerds.
             <br />
             <br />
-            Site made with React and served through Python Flask.
+            Forgive the mess, while this site is rebuilt!
           </div>
         </div>
       </div>
