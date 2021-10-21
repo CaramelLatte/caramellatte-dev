@@ -146,11 +146,6 @@ class Header extends Component {
                     About Me
                   </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink className="nav-link" to="/contact">
-                    Contact Me
-                  </NavLink>
-                </NavItem>
               </Nav>
               <Button onClick={this.toggleModal}>Login</Button>
             </Collapse>

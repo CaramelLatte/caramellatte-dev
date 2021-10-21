@@ -7,8 +7,8 @@ export default class About extends Component {
     return (
       <div className="container">
         <div className="content">
-          Hi, I'm Jared. I consume coffee in irresponsibly dangerous quantities
-          and like coding.
+          Hi, I'm Jared. I consume coffee in irresponsible quantities and I like
+          coding.
           <br />
           <br />
           I'm currently studying full-stack development at{" "}
@@ -19,12 +19,18 @@ export default class About extends Component {
           display my progress. If you're here and you don't know me, you've
           clearly made some poor decisions in life and I would recommend calmly
           backing away and forgetting anything and everything you see here.
-          <br />
-          <br />
-          <div className="smallText">
-            Unless you're either hiring or wish to provide me with coffee. In
-            which case, email me.
-          </div>
+          Unless you're either hiring or wish to provide me with coffee. In
+          which case, let's chat. 
+          <br /> <br />
+          If you'd like to reach out and connect, the
+          most convenient way is through my{" "}
+          <a
+            href="https://www.linkedin.com/in/jared-ekenstam-777348208/"
+            target="_blank"
+            rel="noreferrer">
+            LinkedIn profile
+          </a>
+          .
         </div>
         <br />
         <div className="content">
@@ -40,10 +46,9 @@ export default class About extends Component {
                 Game Server Console
               </CardTitle>
               <CardBody>
-                Flask Router that handles web requests and launches custom
-                scripts to manage various game servers. A live demonstration of
-                this is available in the Games section of this site. (WIP,
-                rebuilding this!)
+                Flask Router that handles web requests to manage various game
+                servers. A live demonstration of this is available in the Games
+                section of this site. (WIP, rebuilding this!)
               </CardBody>
             </Card>
           </div>

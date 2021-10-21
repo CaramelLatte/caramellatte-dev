@@ -1,6 +1,5 @@
 import { Button, Card, CardImg, CardTitle, CardBody } from "reactstrap";
 import React, { Component } from "react";
-import { url } from "../shared/url";
 export default class Games extends Component {
   constructor(props) {
     super(props);
