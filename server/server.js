@@ -11,6 +11,8 @@ app.use(express.static(publicPath));
 // app.get("*", (req, res, next) => {
 //   res.sendFile(path.join(publicPath, "index.html"));
 // });
+const accountsRouter = require("./routes/accountsRouter");
+app.use("/accounts", accountsRouter);
 app.use(express.static(path.join(__dirname, "/../build/")));
 
 app.use((req, res, next) => {
