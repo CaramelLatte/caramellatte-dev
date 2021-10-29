@@ -19,6 +19,7 @@ import {
 import { NavLink } from "react-router-dom";
 import { Alert } from "bootstrap";
 // import LoginComponent from "./loginModalComponent";
+import axios from "axios";
 
 class Header extends Component {
   constructor(props) {
@@ -40,6 +41,11 @@ class Header extends Component {
   // componentDidMount() {
   //   this.getAccounts();
   // }
+  login(data) {
+    this.setState({ username: data });
+    this.setState({ isLogged: true });
+    console.log(this.state.username + " " + this.state.isLogged);
+  }
 
   toggleNav() {
     this.setState({ isNavOpen: !this.state.isNavOpen });
@@ -56,16 +62,37 @@ class Header extends Component {
     e.preventDefault();
 
     let data = new FormData(e.target);
-    let accMatch = this.state.accounts.map((acc) => {
-      if (
-        data.get("username") === acc.username &&
-        data.get("password") === acc.password
-      ) {
-        console.log("success");
-        this.setState({ username: acc.username });
-        this.setState({ isLogged: true });
-      }
-    });
+    let userLogin = {
+      username: data.get("username"),
+      password: data.get("password"),
+    };
+    // let postOptions = {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     username: userLogin.username,
+    //     password: userLogin.password,
+    //   }),
+    // };
+
+    //console.log(postOptions);
+    axios
+      .post("/accounts", {
+        username: userLogin.username,
+        password: userLogin.password,
+      })
+      // .then((response) => {
+      //   if (response.ok) {
+      //     return response.json();
+      //   }
+      //   throw response;
+      // })
+      .then((data) => {
+        this.login(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   handleRegister = (e) => {
@@ -76,7 +103,6 @@ class Header extends Component {
       username: data.get("username"),
       password: data.get("password"),
     };
-    let url = "172.58.44.254:3000";
     let postOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -85,8 +111,9 @@ class Header extends Component {
         password: newUser.password,
       }),
     };
-    fetch(url + "accounts", postOptions).then((response) => {
-      response.json();
+    console.log(postOptions);
+    fetch("/accounts", postOptions).then((response) => {
+      console.log(response);
     });
     //   this.getAccounts();
   };

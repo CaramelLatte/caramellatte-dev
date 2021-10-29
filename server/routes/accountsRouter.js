@@ -15,31 +15,34 @@ const pool = new Pool({
   ssl: {
     rejectUnauthorized: false,
   },
-});
+}); 
 
 accountsRouter
   .route("/")
-  .get((req, res) => {
-    pool.query("SELECT * FROM users", (err, results) => {
-      if (err) console.log(err);
-      console.log(results.rows);
-      if (req.body.username === results.rows[0].user_username) {
-        res.status(200).json("Account match!");
-      } else {
-        res.status(200).json("Account not found");
-      }
-      let check = bcrypt.compareSync(
-        req.body.password,
-        results.rows[0].user_password
-      );
-      if (check === true) {
-        console.log("yes");
-      } else {
-        console.log("no");
-      }
-    });
-  })
   .post((req, res) => {
+    pool.query(
+      `SELECT * FROM users WHERE user_username = '${req.body.username}'`,
+      (err, results) => {
+        if (err) console.log(err);
+        if (results.rows.length < 1) {
+          console.log("Not found!");
+          res.status(400).json("Account not found!");
+        } else {
+          // res.status(200).json("Accou  nt match!");
+          let check = bcrypt.compareSync(
+            req.body.password,
+            results.rows[0].user_password
+          );
+          if (check === true) {
+            res.status(200).json(`${req.body.username}`);
+          } else {
+            res.status(400).json("Wrong password");
+          }
+        }
+      }
+    );
+  })
+  .put((req, res) => {
     let password = req.body.password;
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
