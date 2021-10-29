@@ -55,40 +55,41 @@ class Header extends Component {
     this.toggleModal();
     e.preventDefault();
 
-    // let data = new FormData(e.target);
-    // let accMatch = this.state.accounts.map((acc) => {
-    //   if (
-    //     data.get("username") === acc.username &&
-    //     data.get("password") === acc.password
-    //   ) {
-    //     console.log("success");
-    //     this.setState({ username: acc.username });
-    //     this.setState({ isLogged: true });
-    //   }
-    // });
+    let data = new FormData(e.target);
+    let accMatch = this.state.accounts.map((acc) => {
+      if (
+        data.get("username") === acc.username &&
+        data.get("password") === acc.password
+      ) {
+        console.log("success");
+        this.setState({ username: acc.username });
+        this.setState({ isLogged: true });
+      }
+    });
   };
 
-  // handleRegister = (e) => {
-  //   this.toggleRegister();
-  //   e.preventDefault();
-  //   let data = new FormData(e.target);
-  //   let newUser = {
-  //     username: data.get("username"),
-  //     password: data.get("password"),
-  //   };
-  //   let postOptions = {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       username: newUser.username,
-  //       password: newUser.password,
-  //     }),
-  //   };
-  //   fetch(url + "accounts", postOptions).then((response) => {
-  //     response.json();
-  //   });
-  //   this.getAccounts();
-  // };
+  handleRegister = (e) => {
+    this.toggleRegister();
+    e.preventDefault();
+    let data = new FormData(e.target);
+    let newUser = {
+      username: data.get("username"),
+      password: data.get("password"),
+    };
+    let url = "172.58.44.254:3000";
+    let postOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: newUser.username,
+        password: newUser.password,
+      }),
+    };
+    fetch(url + "accounts", postOptions).then((response) => {
+      response.json();
+    });
+    //   this.getAccounts();
+  };
 
   //get accounts
   // getAccounts = () => {
