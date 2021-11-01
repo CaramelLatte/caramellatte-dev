@@ -19,7 +19,7 @@ let s3 = new aws.S3({
 });
 
 const pool = new Pool({
-  user: s3.user,
+  user: "nutdvvdgsxgsvk",
   host: "ec2-18-234-15-247.compute-1.amazonaws.com",
   database: "d1e9hugahp0n5r",
   password: "7dc25c1edf0bd77382375842b0eae11de5d83303f61323a523169cc9e93f9b7b",
