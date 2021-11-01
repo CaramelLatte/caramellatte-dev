@@ -37,10 +37,6 @@ class Header extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.toggleRegister = this.toggleRegister.bind(this);
   }
-
-  // componentDidMount() {
-  //   this.getAccounts();
-  // }
   login(data) {
     this.setState({ username: data });
     this.setState({ isLogged: true });
@@ -66,27 +62,11 @@ class Header extends Component {
       username: data.get("username"),
       password: data.get("password"),
     };
-    // let postOptions = {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     username: userLogin.username,
-    //     password: userLogin.password,
-    //   }),
-    // };
-
-    //console.log(postOptions);
     axios
-      .post("/accounts", {
+      .post("/accounts/login", {
         username: userLogin.username,
         password: userLogin.password,
       })
-      // .then((response) => {
-      //   if (response.ok) {
-      //     return response.json();
-      //   }
-      //   throw response;
-      // })
       .then((data) => {
         this.login(data.data);
       })
@@ -112,29 +92,10 @@ class Header extends Component {
       }),
     };
     console.log(postOptions);
-    fetch("/accounts", postOptions).then((response) => {
+    fetch("/accounts/register", postOptions).then((response) => {
       console.log(response);
     });
-    //   this.getAccounts();
   };
-
-  //get accounts
-  // getAccounts = () => {
-  //   const pull = {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json" },
-  //   };
-
-  //   fetch(url + "accounts", pull)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       this.setState({ accounts: data });
-  //     });
-  // };
-  // logout = () => {
-  //   console.log("logging out");
-  //   this.setState({ isLogged: false });
-  // };
 
   render() {
     if (this.state.isLogged === false) {
@@ -271,7 +232,7 @@ class Header extends Component {
         </div>
       );
     } else {
-      //IS NOT LOGGED STARTS HERE
+      //IS LOGGED STARTS HERE
       return (
         <div className="header-container">
           <Jumbotron fluid>
@@ -313,8 +274,8 @@ class Header extends Component {
                     Contact Me
                   </NavLink>
                 </NavItem>
-                Welcome {this.state.username}
               </Nav>
+              Welcome {this.state.username}
               <Button onClick={this.logout}>Log Out</Button>
             </Collapse>
           </Navbar>
