@@ -6,8 +6,20 @@ const bcrypt = require("bcryptjs");
 const { Pool, Client } = require("pg");
 const { response } = require("express");
 
+const aws = require("aws-sdk");
+
+let s3 = new aws.S3({
+  accessKeyId: process.env.S3_KEY,
+  secretAccessKey: process.env.S3_SECRET,
+  user: process.env.S3_USER,
+  host: process.env.S3_HOST,
+  database: process.env.S3_DATABASE,
+  password: process.env.S3_PASSWORD,
+  port: process.env.S3_PORT,
+});
+
 const pool = new Pool({
-  user: "nutdvvdgsxgsvk",
+  user: s3.S3_USER,
   host: "ec2-18-234-15-247.compute-1.amazonaws.com",
   database: "d1e9hugahp0n5r",
   password: "7dc25c1edf0bd77382375842b0eae11de5d83303f61323a523169cc9e93f9b7b",
