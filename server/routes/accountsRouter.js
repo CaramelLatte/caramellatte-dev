@@ -1,29 +1,19 @@
 const express = require("express");
 const accountsRouter = express.Router();
 //const fetch = require("node-fetch");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const bcrypt = require("bcryptjs");
-const { Pool, Client } = require("pg");
-const { response } = require("express");
+const { Pool } = require("pg");
 
-const aws = require("aws-sdk");
-
-let s3 = new aws.S3({
-  accessKeyId: process.env.S3_KEY,
-  secretAccessKey: process.env.S3_SECRET,
-  user: process.env.S3_USER,
-  host: process.env.S3_HOST,
-  database: process.env.S3_DATABASE,
-  password: process.env.S3_PASSWORD,
-  port: process.env.S3_PORT,
-});
-
+console.log(process.env.USER);
 const pool = new Pool({
-  user: "nutdvvdgsxgsvk",
-  host: "ec2-18-234-15-247.compute-1.amazonaws.com",
-  database: "d1e9hugahp0n5r",
-  password: "7dc25c1edf0bd77382375842b0eae11de5d83303f61323a523169cc9e93f9b7b",
-  port: 5432,
+  user: process.env.USER,
+  host: process.env.HOST,
+  database: process.env.DATABASE,
+  password: process.env.PASSWORD,
+  port: process.env.PORT,
   ssl: {
     rejectUnauthorized: false,
   },
