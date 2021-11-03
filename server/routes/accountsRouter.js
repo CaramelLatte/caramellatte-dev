@@ -11,7 +11,7 @@ const pool = new Pool({
   host: process.env.HOST,
   database: process.env.DATABASE,
   password: process.env.PASSWORD,
-  port: process.env.PORT,
+  port: process.env.SQL_PORT,
   ssl: {
     rejectUnauthorized: false,
   },
@@ -30,7 +30,7 @@ console.log(
   `DB env: ${process.env.DATABASE} \n type: ${typeof process.env.DATABASE}`
 );
 console.log(
-  `Port env: ${process.env.PORT} \n type: ${typeof process.env.PORT}`
+  `Port env: ${process.env.SQL_PORT} \n type: ${typeof process.env.SQL_PORT}`
 );
 accountsRouter.route("/login").post((req, res) => {
   pool.query(
