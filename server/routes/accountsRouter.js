@@ -6,8 +6,6 @@ dotenv.config();
 
 const bcrypt = require("bcryptjs");
 const { Pool } = require("pg");
-
-console.log(process.env.USER);
 const pool = new Pool({
   user: process.env.USER,
   host: process.env.HOST,
@@ -18,6 +16,22 @@ const pool = new Pool({
     rejectUnauthorized: false,
   },
 });
+console.log(
+  `User env: ${process.env.USER} \n type: ${typeof process.env.USER}`
+);
+console.log(
+  `Password env: ${process.env.PASSWORD} \n type: ${typeof process.env
+    .password}`
+);
+console.log(
+  `Host env: ${process.env.HOST} \n type: ${typeof process.env.HOST}`
+);
+console.log(
+  `DB env: ${process.env.DATABASE} \n type: ${typeof process.env.DATABASE}`
+);
+console.log(
+  `Port env: ${process.env.PORT} \n type: ${typeof process.env.PORT}`
+);
 accountsRouter.route("/login").post((req, res) => {
   pool.query(
     `SELECT * FROM users WHERE user_username = '${req.body.username}'`,
