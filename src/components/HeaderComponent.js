@@ -40,7 +40,6 @@ class Header extends Component {
   login(data) {
     this.setState({ username: data });
     this.setState({ isLogged: true });
-    console.log(this.state.username + " " + this.state.isLogged);
   }
 
   toggleNav() {
@@ -91,7 +90,6 @@ class Header extends Component {
         password: newUser.password,
       }),
     };
-    console.log(postOptions);
     fetch("/accounts/register", postOptions).then((response) => {
       console.log(response);
     });

@@ -16,22 +16,7 @@ const pool = new Pool({
     rejectUnauthorized: false,
   },
 });
-console.log(
-  `User env: ${process.env.USER} \n type: ${typeof process.env.USER}`
-);
-console.log(
-  `Password env: ${process.env.PASSWORD} \n type: ${typeof process.env
-    .password}`
-);
-console.log(
-  `Host env: ${process.env.HOST} \n type: ${typeof process.env.HOST}`
-);
-console.log(
-  `DB env: ${process.env.DATABASE} \n type: ${typeof process.env.DATABASE}`
-);
-console.log(
-  `Port env: ${process.env.SQL_PORT} \n type: ${typeof process.env.SQL_PORT}`
-);
+
 accountsRouter.route("/login").post((req, res) => {
   pool.query(
     `SELECT * FROM users WHERE user_username = '${req.body.username}'`,
@@ -60,7 +45,7 @@ accountsRouter.route("/register").post((req, res) => {
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
   pool.query(
-    `SELECT * FROM users WHERE user_username = '${req.body.username}'`,
+    `SELECT $::req.body.name FROM users WHERE user_username = '${req.body.username}'`,
     (err, result) => {
       if (err) {
         console.log(err);
@@ -74,7 +59,6 @@ accountsRouter.route("/register").post((req, res) => {
           .json(`Account created with username ${req.body.username}`);
       } else {
         res.status(400).json("Account already exists!");
-        console.log("Account exists");
       }
     }
   );

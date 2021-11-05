@@ -2,8 +2,6 @@ import React, { Component } from "react";
 
 class Home extends Component {
   render() {
-    console.log("got here");
-
     return (
       <div className="content container">
         <div className="row">
