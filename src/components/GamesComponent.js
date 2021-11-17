@@ -1,18 +1,42 @@
 import { Button, Card, CardImg, CardTitle, CardBody } from "reactstrap";
 import React, { Component } from "react";
+import axios from "axios";
+
+let url = "localhost:8080/";
+
 export default class Games extends Component {
   constructor(props) {
     super(props);
     this.state = {
       mineServ: "Offline",
       valServ: "Offline",
+      minePlayers: 0,
+      valPlayers: 0,
     };
   }
+  componentDidMount = () => {
+    axios({
+      method: "get",
+      url: "http://localhost:8080/check",
+    })
+      .then((data) => {
+        this.mineServUpdate(data.data);
+        console.log(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  mineServUpdate = (data) => {
+    this.setState({ mineServ: data.online_status });
+    this.setState({ minePlayers: data.player_count });
+  };
   // startMinecraft = () => {
   //   let get = {
   //     method: "GET",
   //   };
-  //   fetch(url + "games/minecraft", get)
+  //   fetch(url, get)
   //     .then((response) => {
   //       response.json();
   //     })
@@ -22,7 +46,7 @@ export default class Games extends Component {
   //   let get = {
   //     method: "GET",
   //   };
-  //   fetch(url + "games/minecraftstop", get)
+  //   fetch(url + "/close", get)
   //     .then((response) => {
   //       response.json();
   //     })
@@ -46,13 +70,14 @@ export default class Games extends Component {
   //     response.json();
   //   });
   // };
+
   render() {
     return (
       <div className="container">
         <div className="content">
           These game servers are hosted on a dedicated machine. Specific
           instructions to connect to the hosted game world will be included with
-          each game listed! (WIP, the backend for this is being rebuilt in
+          each game listed! (test, the backend for this is being rebuilt in
           Flask)
         </div>
         <br />
@@ -71,8 +96,15 @@ export default class Games extends Component {
                 Minecraft
               </CardTitle>
               <CardBody>
-                <div className="row justify-content-center">
+                {/* <div className="row justify-content-center">
                   Server is: {this.state.mineServ}{" "}
+                </div> */}
+                <div className="row justify-content-center">
+                  Server is: {this.state.mineServ} Players connected:{" "}
+                  {this.state.minePlayers}
+                  <div className="offline-indicator">
+                    <span class="offline-blink"></span>
+                  </div>
                 </div>
                 <div className="container">
                   <div className="row justify-content-center">

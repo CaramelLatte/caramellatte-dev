@@ -43,4 +43,46 @@
   height: 200px;
 }
 
+.online-indicator {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+
+  background-color: #0fcc45;
+  border-radius: 50%;
+
+  position: relative;
+}
+
+.offline-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+
+  background-color: #cc1c0f;
+  border-radius: 50%;
+
+  position: relative;
+}
+span.offline-blink {
+  display: block;
+  width: 10px;
+  height: 10px;
+
+  background-color: #cc1c0f;
+  opacity: 0.7;
+  border-radius: 50%;
+
+  animation: offline-blink 1s linear infinite;
+}
+@keyframes offline-blink {
+  100% {
+    transform: scale(2, 2);
+    opacity: 0;
+  }
+}
+
 /*# sourceMappingURL=App.css.map */
