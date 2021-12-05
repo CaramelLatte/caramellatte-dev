@@ -17,7 +17,6 @@ import {
   Label,
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
-import { Alert } from "bootstrap";
 // import LoginComponent from "./loginModalComponent";
 import axios from "axios";
 
