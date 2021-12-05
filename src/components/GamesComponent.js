@@ -66,7 +66,7 @@ export default class Games extends Component {
     this.timer.stop();
     axios({
       method: "get",
-      url: this.state.url + "start",
+      url: this.state.url + "minecraft/start",
     })
       .then((data) => {
         this.mineServUpdate(data.data);
@@ -81,7 +81,7 @@ export default class Games extends Component {
     this.timer.stop();
     axios({
       method: "get",
-      url: this.state.url + "stop",
+      url: this.state.url + "minecraft/stop",
     })
       .then((data) => {
         this.mineServUpdate(data.data);
@@ -132,8 +132,7 @@ export default class Games extends Component {
         <div className="content">
           These game servers are hosted on a dedicated machine. Specific
           instructions to connect to the hosted game world will be included with
-          each game listed! (the backend for this is being rebuilt in
-          Flask)
+          each game listed! (the backend for this is being rebuilt in Flask)
         </div>
         <br />
         <div className="row">
