@@ -46,9 +46,10 @@
 
 .online-indicator {
   display: inline-block;
-  width: 15px;
-  height: 15px;
+  width: 10px;
+  height: 10px;
   margin-right: 10px;
+  margin-top: 5px;
   background-color: #0fcc45;
   border-radius: 50%;
   position: relative;
@@ -65,17 +66,17 @@
   position: relative;
 }
 
-span.offline-blink {
+span.online-blink {
   display: block;
   width: 10px;
   height: 10px;
-  background-color: #cc1c0f;
+  background-color: #0fcc45;
   opacity: 0.7;
   border-radius: 50%;
-  animation: offline-blink 1s linear infinite;
+  animation: online-blink 1s linear infinite;
 }
 
-@keyframes offline-blink {
+@keyframes online-blink {
   100% {
     transform: scale(2, 2);
     opacity: 0;

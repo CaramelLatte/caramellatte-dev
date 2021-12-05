@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import Home from "./HomeComponent";
 import Header from "./HeaderComponent";
-import Certificates from "./CertificatesComponent";
+// import Certificates from "./CertificatesComponent";
 import About from "./AboutComponent";
 import Games from "./GamesComponent";
 
@@ -13,9 +13,9 @@ class Main extends Component {
     const HomePage = () => {
       return <Home />;
     };
-    const CertificatesPage = () => {
-      return <Certificates />;
-    };
+    // const CertificatesPage = () => {
+    //   return <Certificates />;
+    // };
     const AboutPage = () => {
       return <About />;
     };
@@ -28,7 +28,7 @@ class Main extends Component {
         <Header></Header>
         <Switch>
           <Route exact path="/home" component={HomePage} />
-          <Route exact path="/certificates" component={CertificatesPage} />
+          {/* <Route exact path="/certificates" component={CertificatesPage} /> */}
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/games" component={GamesPage} />
           <Redirect to="/home" />

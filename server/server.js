@@ -5,6 +5,7 @@ const publicPath = path.join(__dirname, "/../build/");
 const port = process.env.PORT || 3000;
 const logger = require("morgan");
 let bp = require("body-parser");
+const webpack = require('webpack')
 
 //app.use(express.static("public"));
 app.use(bp.json());
