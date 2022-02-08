@@ -131,7 +131,7 @@ export default class Games extends Component {
         <div className="content">
           These game servers are hosted on a dedicated machine. Specific
           instructions to connect to the hosted game world will be included with
-          each game listed! (the backend for this is being rebuilt in Flask)
+          each game listed! (the backend for this is being rebuilt to run on a small headless server)
         </div>
         <br />
         <div className="row">
@@ -146,7 +146,7 @@ export default class Games extends Component {
               <CardTitle
                 tag="h5"
                 className="text-center text-success border-bottom border-top">
-                Minecraft
+                Minecraft (Java)
               </CardTitle>
               <CardBody>
                 <div className="row justify-content-center">
