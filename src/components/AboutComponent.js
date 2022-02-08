@@ -53,10 +53,16 @@ export default class About extends Component {
             </Card>
           </div>
           <div className="col-4">
-            <Card>
-              <CardImg width="100%" src="logo192.png" />
-              <CardTitle>Project</CardTitle>
-            </Card>
+              <Card>
+                <a href="https://github.com/CaramelLatte/NotLN_game" target="_blank"> 
+                  <CardImg width="100%" src="logo192.png" />
+                </a>
+                <CardTitle className="text-center border-bottom border-top">Night of the Living Nerds</CardTitle>
+                <CardBody>
+                  Very simple twin-stick style game. Made with pygame. 
+                </CardBody>
+              </Card>
+
           </div>
           <div className="col-4">
             <Card>
