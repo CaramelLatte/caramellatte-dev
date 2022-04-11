@@ -47,6 +47,7 @@ export default class Games extends Component {
       url: this.state.url + "minecraft",
     })
       .then((data) => {
+        console.log(data.data)
         this.mineServUpdate(data.data);
       })
       .catch((err) => {
@@ -55,9 +56,14 @@ export default class Games extends Component {
   };
 
   mineServUpdate = (data) => {
-    this.setState({ mineServ: data.online_status });
+    if (data.active_server === "minecraft") {
+      this.setState({ mineServ: "online" });
+    }
+    else {
+      this.setState({mineServ: "offline"})
+    }
     if (data.player_count) {
-      this.setState({ mineServ: data.online_status });
+      //this.setState({ mineServ: data.online_status });
       this.setState({ minePlayers: data.player_count });
     }
   };

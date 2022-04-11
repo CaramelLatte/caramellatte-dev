@@ -20,7 +20,7 @@ export default class Certificates extends Component {
           HTML, CSS, and Javascript Fundamentals
         </a>
         <br />
-        <a href={Course2} rel="noreferrer" target="_blank">
+        {/* <a href={Course2} rel="noreferrer" target="_blank">
           Bootstrap
         </a>{" "}
         <br />
@@ -34,7 +34,7 @@ export default class Certificates extends Component {
         <br />
         <a href={Course5} rel="noreferrer" target="_blank">
           NodeJS, Express, MongoDB
-        </a>
+        </a> */}
         <br />
         <a href={Grad} rel="noreferrer" target="_blank">
           Full-Stack Web and Mobile Development Completion

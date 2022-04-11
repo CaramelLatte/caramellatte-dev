@@ -11,12 +11,11 @@ export default class About extends Component {
           coding.
           <br />
           <br />
-          I'm currently studying full-stack development at{" "}
-          <a href="https://nucamp.co">Nucamp</a>, a hybrid part-time coding
-          bootcamp.
+          I'm a graduate from{" "}<a href="https://nucamp.co"target="_blank"
+            rel="noreferrer">Nucamp</a>, a coding
+          bootcamp, where I completed their complete software development program.
           <br /> <br />
-          I'm building this site and using it to practice what I learn and
-          display my progress. If you're here and you don't know me, you've
+          This is my personal site, to display and integrate some of my own projects. If you're here and you don't know me, you've
           clearly made some poor decisions in life and I would recommend calmly
           backing away and forgetting anything and everything you see here.
           Unless you're either hiring or wish to provide me with coffee. In
@@ -41,7 +40,9 @@ export default class About extends Component {
         <div className="row">
           <div className="col-4">
             <Card>
-              <CardImg width="100%" src="logo192.png" />
+              <a href="https://github.com/CaramelLatte/game-server" target="_blank">
+                <CardImg width="100%" src="logo192.png" />
+              </a>
               <CardTitle className="text-center border-bottom border-top">
                 Game Server Console
               </CardTitle>
@@ -67,7 +68,7 @@ export default class About extends Component {
           <div className="col-4">
             <Card>
               <CardImg width="100%" src="logo192.png" />
-              <CardTitle>Project</CardTitle>
+              <CardTitle>Placeholder</CardTitle>
             </Card>
           </div>
         </div>
