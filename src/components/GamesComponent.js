@@ -44,7 +44,7 @@ export default class Games extends Component {
   runCheck = () => {
     axios({
       method: "get",
-      url: this.state.url + "minecraft",
+      url: this.state.url + "update"
     })
       .then((data) => {
         console.log(data.data)
