@@ -12,13 +12,12 @@ export default class About extends Component {
           <br />
           <br />
           I'm a graduate from{" "}<a href="https://nucamp.co"target="_blank"
-            rel="noreferrer">Nucamp</a>, a coding
-          bootcamp, where I completed their complete software development program.
+            rel="noreferrer">Nucamp's</a> complete software engineering course.
           <br /> <br />
           This is my personal site, to display and integrate some of my own projects. If you're here and you don't know me, you've
           clearly made some poor decisions in life and I would recommend calmly
           backing away and forgetting anything and everything you see here.
-          Unless you're either hiring or wish to provide me with coffee. In
+          Unless you're either hiring or want to talk about nerdy code stuff. In
           which case, let's chat. 
           <br /> <br />
           If you'd like to reach out and connect, the
@@ -33,7 +32,7 @@ export default class About extends Component {
         </div>
         <br />
         <div className="content">
-          This space is to display ongoing personal projects.
+          Feel free to take a look at some things I've built. Icons lead to github pages.
         </div>
         <br />
         <br />
@@ -49,7 +48,7 @@ export default class About extends Component {
               <CardBody>
                 Flask Router that handles web requests to manage various game
                 servers. A live demonstration of this is available in the Games
-                section of this site. (WIP, rebuilding this!)
+                section of this site.
               </CardBody>
             </Card>
           </div>

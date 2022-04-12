@@ -6,7 +6,7 @@ import Header from "./HeaderComponent";
 import About from "./AboutComponent";
 import Games from "./GamesComponent";
 
-import "../App.css";
+import "../app.css";
 
 class Main extends Component {
   render() {

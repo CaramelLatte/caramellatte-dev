@@ -1,3 +1,11 @@
+body {
+  background-color: #fefbea;
+}
+
+.button-right {
+  align-self: right;
+}
+
 .jumbotron {
   background-color: #6d7993 !important;
   padding: 0;
@@ -11,6 +19,15 @@
 .navbar-dark {
   background-color: #96858f;
   margin-bottom: 20px;
+  align-items: self-end;
+}
+
+.navbar-nav {
+  text-align: right;
+}
+
+.navbar-collapse {
+  text-align: right;
 }
 
 .content {
@@ -40,30 +57,34 @@
 
 .gameIcon {
   object-fit: fill;
-  width: 200px;
-  height: 200px;
+  width: 224px;
+  height: 225px;
+}
+
+.card {
+  width: 225px;
 }
 
 .online-indicator {
   display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin-right: 10px;
-  margin-top: 5px;
+  width: 12px;
+  height: 12px;
   background-color: #0fcc45;
   border-radius: 50%;
   position: relative;
+  align-self: center;
+  left: 5px;
 }
 
 .offline-indicator {
   display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin-right: 10px;
-  margin-top: 5px;
+  width: 12px;
+  height: 12px;
   background-color: #cc1c0f;
   border-radius: 50%;
   position: relative;
+  align-self: center;
+  left: 5px;
 }
 
 span.online-blink {
@@ -82,6 +103,11 @@ span.online-blink {
     opacity: 0;
   }
 }
+.serverPorts {
+  font-size: 10px;
+  text-align: center;
+}
+
 /*# sourceMappingURL=App.css.map */
 
 /*# sourceMappingURL=app.css.map */

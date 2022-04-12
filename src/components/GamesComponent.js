@@ -63,7 +63,6 @@ export default class Games extends Component {
       this.setState({mineServ: "offline"})
     }
     if (data.player_count) {
-      //this.setState({ mineServ: data.online_status });
       this.setState({ minePlayers: data.player_count });
     }
   };
@@ -98,27 +97,65 @@ export default class Games extends Component {
     setTimeout(3000);
     this.timer.start();
   };
-  // startValheim = () => {
-  //   let get = {
-  //     method: "GET",
-  //   };
-  //   fetch(url + "games/valheim", get)
-  //     .then((response) => {
-  //       response.json();
-  //     })
-  //     .catch();
-  // };
-  // stopValheim = () => {
-  //   let get = {
-  //     method: "GET",
-  //   };
-  //   fetch(url + "games/valheim", get).then((response) => {
-  //     response.json();
-  //   });
-  // };
 
-  indicatorLight = () => {
+  valServUpdate = (data) => {
+    if (data.active_server === "valheim") {
+      this.setState({ valServ: "online" });
+    }
+    else {
+      this.setState({valServ: "offline"})
+    }
+    if (data.player_count) {
+      this.setState({ valPlayers: data.player_count });
+    }
+  };
+  startValheim = () => {
+    this.timer.stop();
+    axios({
+      method: "get",
+      url: this.state.url + "valheim/start",
+    })
+      .then((data) => {
+        this.valServUpdate(data.data);
+        console.log(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.timer.start();
+  };
+  stopValheim = () => {
+    this.timer.stop();
+    axios({
+      method: "get",
+      url: this.state.url + "valheim/stop",
+    })
+      .then((data) => {
+        this.valServUpdate(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.runCheck();
+    setTimeout(3000);
+    this.timer.start();
+  };
+
+  mineIndicator = () => {
     if (this.state.mineServ === "online") {
+      return (
+        <div className="online-indicator">
+          <span class="online-blink"></span>
+        </div>
+      );
+    } else if (this.state.mineServ === "offline") {
+      return <div className="offline-indicator"></div>;
+    } else {
+      return <div></div>;
+    }
+  };
+  valIndicator = () => {
+    if (this.state.valServ === "online") {
       return (
         <div className="online-indicator">
           <span class="online-blink"></span>
@@ -135,9 +172,11 @@ export default class Games extends Component {
     return (
       <div className="container">
         <div className="content">
-          These game servers are hosted on a dedicated machine. Specific
-          instructions to connect to the hosted game world will be included with
-          each game listed! (the backend for this is being rebuilt to run on a small headless server)
+          Welcome. This is a control panel for game servers. Access to these servers is curently unrestricted. You may launch or close them at will, and anyone may play on an online server with the connection information listed. In the future you will be required to register and request admin permissions for some features
+
+          Consider this a functional demonstration rather than a completed project. More features and functionalty will come soon.
+
+          Limitations: This project is running on a raspbery pi, so don't expect enterprise level performance.
         </div>
         <br />
         <div className="row">
@@ -156,7 +195,7 @@ export default class Games extends Component {
               </CardTitle>
               <CardBody>
                 <div className="row justify-content-center">
-                  Server is: {this.state.mineServ} {this.indicatorLight()}
+                  Server is: {this.state.mineServ} {" "} {this.mineIndicator()}
                 </div>
                 <div className="row justify-content-center">
                   Players connected: {this.state.minePlayers}
@@ -175,10 +214,16 @@ export default class Games extends Component {
                       onClick={this.stopMinecraft}>
                       Stop Server
                     </Button>
+
+                  </div>
+                  <div className="serverPorts">Server address:<br/>
+                    games.caramellatte.dev:25565
                   </div>
                 </div>
               </CardBody>
             </Card>
+            
+            
           </div>
           <div className="col-sm-6 col-lg-4 d-flex justify-content-center">
             <Card>
@@ -191,17 +236,20 @@ export default class Games extends Component {
               <CardTitle
                 tag="h5"
                 className="text-center text-success border-bottom border-top">
-                Valheim (Not available yet)
+                Valheim
               </CardTitle>
               <CardBody>
                 <div className="row justify-content-center">
-                  Server is: {this.state.valServ}
+                  Server is: {this.state.valServ}  {this.valIndicator()}
+                </div>
+                <div className="row justify-content-center">
+                  Players connected: {this.state.minePlayers}
                 </div>
                 <div className="container">
                   <div className="row justify-content-center">
                     <Button
                       className="gameButton btn btn-success text-center"
-                      //onClick={this.startMinecraft}
+                      onClick={this.startValheim}
                     >
                       Start server
                     </Button>
@@ -209,14 +257,20 @@ export default class Games extends Component {
                   <div className="row justify-content-center">
                     <Button
                       className="gameButton btn btn-danger"
-                      //onClick={this.stopMinecraft}
+                      onClick={this.stopValheim}
                     >
                       Stop Server
                     </Button>
+                    
+                    
+                  </div>
+                  <div className="serverPorts">Server address:<br/>
+                    games.caramellatte.dev:2456
                   </div>
                 </div>
               </CardBody>
             </Card>
+            
           </div>
         </div>
       </div>

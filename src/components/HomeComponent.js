@@ -6,10 +6,7 @@ class Home extends Component {
       <div className="content container">
         <div className="row">
           <div className="col text-wrap">
-            You're all a bunch of nerds. asdf
-            <br />
-            <br />
-            Forgive the mess, while this site is rebuilt!
+            You're all a bunch of nerds.
           </div>
         </div>
       </div>

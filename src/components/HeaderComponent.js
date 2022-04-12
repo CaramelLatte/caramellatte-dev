@@ -113,7 +113,7 @@ class Header extends Component {
             <Collapse isOpen={this.state.isNavOpen} navbar>
               <Nav className="col" navbar>
                 <NavItem>
-                  <NavLink className="nav-link" to="/home">
+                  <NavLink className="nav-link test" to="/home">
                     Home
                   </NavLink>
                 </NavItem>
@@ -133,7 +133,7 @@ class Header extends Component {
                   </NavLink>
                 </NavItem>
               </Nav>
-              <Button onClick={this.toggleModal}>Login</Button>
+              <Button className="button-right" onClick={this.toggleModal}>Login</Button>
             </Collapse>
           </Navbar>
 
