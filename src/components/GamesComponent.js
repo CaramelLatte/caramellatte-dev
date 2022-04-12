@@ -176,7 +176,7 @@ export default class Games extends Component {
 
           Consider this a functional demonstration rather than a completed project. More features and functionalty will come soon.
 
-          Limitations: This project is running on a raspbery pi, so don't expect enterprise level performance.
+          Limitations: This project is running on a raspberry pi, so don't expect enterprise level performance.
         </div>
         <br />
         <div className="row">
