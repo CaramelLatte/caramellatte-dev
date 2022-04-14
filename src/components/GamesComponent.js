@@ -245,7 +245,7 @@ export default class Games extends Component {
                   Server is: {this.state.valServ}  {this.valIndicator()}
                 </div>
                 <div className="row justify-content-center">
-                  Players connected: {this.state.minePlayers}
+                  Players connected: {this.state.valPlayers}
                 </div>
                 <div className="container">
                   <div className="row justify-content-center">
