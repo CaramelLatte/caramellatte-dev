@@ -50,23 +50,13 @@ export default class Games extends Component {
       .then((data) => {
         console.log(data.data)
         this.mineServUpdate(data.data);
+        this.valServUpdate(data.data)
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  mineServUpdate = (data) => {
-    if (data.active_server === "minecraft") {
-      this.setState({ mineServ: "online" });
-    }
-    else {
-      this.setState({mineServ: "offline"})
-    }
-    if (data.player_count) {
-      this.setState({ minePlayers: data.player_count });
-    }
-  };
   startMinecraft = () => {
     this.timer.stop();
     axios({
@@ -97,6 +87,23 @@ export default class Games extends Component {
     this.runCheck();
     setTimeout(3000);
     this.timer.start();
+  };
+
+  mineServUpdate = (data) => {
+    if (data.active_server === "minecraft") {
+      this.setState({ mineServ: "online" });
+    }
+    else {
+      this.setState({mineServ: "offline"})
+    }
+    if (data.player_count) {
+      if (this.state.mineServ === "online") {
+      this.setState({ minePlayers: data.player_count });
+      }
+      else {
+        this.setState({ minePlayers: 0})
+      }
+    }
   };
 
   valServUpdate = (data) => {
