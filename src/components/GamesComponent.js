@@ -275,7 +275,7 @@ export default class Games extends Component {
                     
                   </div>
                   <div className="serverPorts">Server address:<br/>
-                    games.caramellatte.dev:2456
+                    games.caramellatte.dev:5656
                   </div>
                 </div>
               </CardBody>
