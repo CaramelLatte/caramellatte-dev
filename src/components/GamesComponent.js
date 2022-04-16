@@ -114,6 +114,9 @@ export default class Games extends Component {
       this.setState({valServ: "offline"})
     }
     if (data.player_count) {
+      if (this.state.valServ === "online") {
+      this.setState({ valPlayers: data.player_count });
+      }
       this.setState({ valPlayers: data.player_count });
     }
   };
