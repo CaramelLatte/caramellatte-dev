@@ -174,7 +174,7 @@ export default class Games extends Component {
           <span class="online-blink"></span>
         </div>
       );
-    } else if (this.state.mineServ === "offline") {
+    } else if (this.state.valServ === "offline") {
       return <div className="offline-indicator"></div>;
     } else {
       return <div></div>;
