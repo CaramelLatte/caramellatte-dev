@@ -114,7 +114,12 @@ export default class Games extends Component {
       this.setState({valServ: "offline"})
     }
     if (data.player_count) {
+      if (this.state.valServ === "online") {
       this.setState({ valPlayers: data.player_count });
+      }
+      else {
+      this.setState({ valPlayers: 0 });
+      }
     }
   };
   startValheim = () => {
@@ -169,7 +174,7 @@ export default class Games extends Component {
           <span class="online-blink"></span>
         </div>
       );
-    } else if (this.state.mineServ === "offline") {
+    } else if (this.state.valServ === "offline") {
       return <div className="offline-indicator"></div>;
     } else {
       return <div></div>;
