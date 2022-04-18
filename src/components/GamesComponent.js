@@ -36,7 +36,7 @@ export default class Games extends Component {
       valPlayers: 0,
       url: process.env.REACT_APP_GAME_SERVER_URL,
     };
-    this.timer = new Timer(this.runCheck, 30000);
+    this.timer = new Timer(this.runCheck, 60000);
   }
   componentDidMount = () => {
     this.runCheck();
