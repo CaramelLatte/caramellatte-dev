@@ -41,8 +41,8 @@ class Header extends Component {
     this.setState({ isLogged: true });
   }
   logout() {
-    this.setState({username: ""});
-    this.setState({isLogged: false});
+    this.setState({ username: "" });
+    this.setState({ isLogged: false });
   }
 
   toggleNav() {
