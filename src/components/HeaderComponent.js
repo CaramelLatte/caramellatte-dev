@@ -272,8 +272,8 @@ class Header extends Component {
                   </NavLink>
                 </NavItem> */}
               </Nav>
-              Welcome {this.state.username} {" "}
-              <Button onClick={this.logout}>Log Out</Button>
+              Welcome {this.state.username} 
+              {" "}<Button onClick={this.logout}>Log Out</Button>
             </Collapse>
           </Navbar>
 
