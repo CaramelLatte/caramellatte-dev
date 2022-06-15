@@ -236,7 +236,7 @@ class Header extends Component {
             <div className="container">
               <div className="row">
                 <div className="col">
-                  <h1>Oh god what do you title a page like this?</h1>
+                  <h1>Will work for coffee</h1>
                 </div>
               </div>
             </div>
@@ -272,9 +272,10 @@ class Header extends Component {
                   </NavLink>
                 </NavItem> */}
               </Nav>
-              Welcome {this.state.username} 
               {" "}<Button onClick={this.logout}>Log Out</Button>
             </Collapse>
+            Welcome {this.state.username} 
+              {" "}
           </Navbar>
 
           <Modal isOpen={this.state.isLoginOpen} toggle={this.toggleModal}>
