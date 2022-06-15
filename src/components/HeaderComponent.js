@@ -40,7 +40,7 @@ class Header extends Component {
     this.setState({ username: data });
     this.setState({ isLogged: true });
   }
-  logout() {
+  logout = () => {
     this.setState({ username: "" });
     this.setState({ isLogged: false });
   }
