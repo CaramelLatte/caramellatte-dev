@@ -242,6 +242,7 @@ class Header extends Component {
             </div>
           </Jumbotron>
           <Navbar dark sticky="top" expand="md">
+            Welcome {this.state.username} {" "}
             <NavbarBrand></NavbarBrand>
             <NavbarToggler onClick={this.toggleNav} />
             <Collapse isOpen={this.state.isNavOpen} navbar>
@@ -274,8 +275,6 @@ class Header extends Component {
               </Nav>
               {" "}<Button onClick={this.logout}>Log Out</Button>
             </Collapse>
-            Welcome {this.state.username} 
-              {" "}
           </Navbar>
 
           <Modal isOpen={this.state.isLoginOpen} toggle={this.toggleModal}>
