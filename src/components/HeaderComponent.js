@@ -252,10 +252,10 @@ class Header extends Component {
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav-link" to="/certificates">
+                  {/* <NavLink className="nav-link" to="/certificates">
                     Certificates
                   </NavLink>
-                </NavItem>
+                </NavItem> */}
                 <NavItem>
                   <NavLink className="nav-link" to="/projects">
                     Projects
@@ -266,11 +266,11 @@ class Header extends Component {
                     About Me
                   </NavLink>
                 </NavItem>
-                <NavItem>
+                {/* <NavItem>
                   <NavLink className="nav-link" to="/contact">
                     Contact Me
                   </NavLink>
-                </NavItem>
+                </NavItem> */}
               </Nav>
               Welcome {this.state.username}
               <Button onClick={this.logout}>Log Out</Button>
