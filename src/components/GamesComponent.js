@@ -1,7 +1,7 @@
 import { Button, Card, CardImg, CardTitle, CardBody } from "reactstrap";
 import React, { Component } from "react";
 import axios from "axios";
-//aaa
+
 
 function Timer(func, time) {
   let intervalTimer = setInterval(func, time);
@@ -185,15 +185,12 @@ export default class Games extends Component {
     return (
       <div className="container">
         <div className="content">
-          Welcome. This is a control panel for game servers. Access to these servers is curently unrestricted. You may launch or close them at will, and anyone may play on an online server with the connection information listed. In the future you will be required to register and request admin permissions for some features.
-          <br />
-          <br />
+          Welcome. This is a control panel for game servers. Access to these servers is currently unrestricted. You may launch or close them at will, and anyone may play on an online server with the connection information listed. In the future you will be required to register and request admin permissions for some features.
+          <p/>
           Consider this a functional demonstration rather than a completed project. More features and functionalty will come soon.
-          <br />
-          <br />
+          <p/>
           Limitations: This project is running on a raspberry pi, so don't expect enterprise level performance.
-          <br />
-          <br />
+          <p/>
           This page updates every couple minutes. Wait three minutes after starting or stopping a server to see it properly reflected here.
         </div>
         <br />
