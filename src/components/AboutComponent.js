@@ -71,7 +71,7 @@ export default class About extends Component {
             </Card>
           </div>
         </div>
-        <iframe frameborder="0" width="1024" height="768" src="https://replit.com/@VanillaAffogato/Night-of-the-Living-Nerds?embed=true"></iframe>
+        <iframe frameborder="0" width="1024" height="818" src="https://replit.com/@VanillaAffogato/Night-of-the-Living-Nerds?embed=true"></iframe>
       </div>
     );
   }
