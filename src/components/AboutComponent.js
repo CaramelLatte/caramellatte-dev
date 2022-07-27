@@ -11,14 +11,14 @@ export default class About extends Component {
           coding.
           <br />
           <br />
-          I'm a graduate from{" "}<a href="https://nucamp.co"target="_blank"
+          I'm a graduate from{" "}<a href="https://nucamp.co" target="_blank"
             rel="noreferrer">Nucamp's</a> complete software engineering course.
           <br /> <br />
           This is my personal site, to display and integrate some of my own projects. If you're here and you don't know me, you've
           clearly made some poor decisions in life and I would recommend calmly
           backing away and forgetting anything and everything you see here.
           Unless you're either hiring or want to talk about nerdy code stuff. In
-          which case, let's chat. 
+          which case, let's chat.
           <br /> <br />
           If you'd like to reach out and connect, the
           most convenient way is through my{" "}
@@ -53,15 +53,15 @@ export default class About extends Component {
             </Card>
           </div>
           <div className="col-4">
-              <Card>
-                <a href="https://github.com/CaramelLatte/NotLN_game" target="_blank"> 
-                  <CardImg width="100%" src="logo192.png" />
-                </a>
-                <CardTitle className="text-center border-bottom border-top">Night of the Living Nerds</CardTitle>
-                <CardBody>
-                  Very simple twin-stick style game. Made with pygame. 
-                </CardBody>
-              </Card>
+            <Card>
+              <a href="https://github.com/CaramelLatte/NotLN_game" target="_blank">
+                <CardImg width="100%" src="logo192.png" />
+              </a>
+              <CardTitle className="text-center border-bottom border-top">Night of the Living Nerds</CardTitle>
+              <CardBody>
+                Very simple twin-stick style game. Made with pygame.
+              </CardBody>
+            </Card>
 
           </div>
           <div className="col-4">
@@ -71,6 +71,7 @@ export default class About extends Component {
             </Card>
           </div>
         </div>
+        <iframe frameborder="0" width="100%" height="500px" src="https://replit.com/@VanillaAffogato/Night-of-the-Living-Nerds?embed=true"></iframe>
       </div>
     );
   }
