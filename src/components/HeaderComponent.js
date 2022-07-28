@@ -256,7 +256,7 @@ class Header extends Component {
                   </NavLink>
                 </NavItem>
                 {/* <NavItem> */}
-                  {/* <NavLink className="nav-link" to="/certificates">
+                {/* <NavLink className="nav-link" to="/certificates">
                     Certificates
                   </NavLink>
                 </NavItem> */}

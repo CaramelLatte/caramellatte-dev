@@ -1,11 +1,32 @@
 import React, { Component } from "react";
-import { Card, CardImg, CardOverlay, CardTitle } from "reactstrap";
+import { Card, CardImg, CardOverlay, CardTitle, Modal, ModalHeader, ModalBody } from "reactstrap";
 import CardBody from "reactstrap/lib/CardBody";
 
+
 export default class About extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isGameOpen: false,
+    };
+    this.toggleModal = this.toggleModal.bind(this)
+  }
+
+  toggleModal() {
+    this.setState({ isGameOpen: !this.state.isGameOpen });
+  }
+
+
   render() {
     return (
+
       <div className="container">
+        <Modal overflow isOpen={this.state.isGameOpen} size="large" toggle={this.toggleModal}>
+          <ModalHeader toggle={this.toggleModal}>NotLN</ModalHeader>
+          <ModalBody>
+            <iframe frameborder="0" width="1024" height="900" src="https://replit.com/@VanillaAffogato/Night-of-the-Living-Nerds?embed=true"></iframe>
+          </ModalBody>
+        </Modal>
         <div className="content">
           Hi, I'm Jared. I consume coffee in irresponsible quantities and I like
           coding.
@@ -59,7 +80,7 @@ export default class About extends Component {
               </a>
               <CardTitle className="text-center border-bottom border-top">Night of the Living Nerds</CardTitle>
               <CardBody>
-                Very simple twin-stick style game. Made with pygame.
+                Very simple twin-stick style game. Made with pygame. Click <a onClick={this.toggleModal} className="nav-link">here</a> to play.
               </CardBody>
             </Card>
 
@@ -71,7 +92,6 @@ export default class About extends Component {
             </Card>
           </div>
         </div>
-        <iframe frameborder="0" width="1024" height="900" src="https://replit.com/@VanillaAffogato/Night-of-the-Living-Nerds?embed=true"></iframe>
       </div>
     );
   }

@@ -110,6 +110,9 @@ span.online-blink {
   text-align: center;
 }
 
+.modal-content {
+  width: fit-content;
+}
 /*# sourceMappingURL=App.css.map */
 
 /*# sourceMappingURL=app.css.map */
