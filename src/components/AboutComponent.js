@@ -80,7 +80,7 @@ export default class About extends Component {
               </a>
               <CardTitle className="text-center border-bottom border-top">Night of the Living Nerds</CardTitle>
               <CardBody>
-                Very simple twin-stick style game. Made with pygame. Click <a onClick={this.toggleModal} className="nav-link">here</a> to play.
+                Very simple twin-stick style game. Made with pygame. Click <a onClick={this.toggleModal} className="game-link">here</a> to play.
               </CardBody>
             </Card>
 
