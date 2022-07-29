@@ -58,7 +58,7 @@ export default class About extends Component {
         <br />
         <br />
         <div className="row">
-          <div className="col-4">
+          <div className="col xs={12} md={4}">
             <Card>
               <a href="https://github.com/CaramelLatte/game-server" target="_blank">
                 <CardImg width="100%" src="logo192.png" />
@@ -73,7 +73,7 @@ export default class About extends Component {
               </CardBody>
             </Card>
           </div>
-          <div className="col-4">
+          <div className="col xs={12} md={4}">
             <Card>
               <a href="https://github.com/CaramelLatte/NotLN_game" target="_blank">
                 <CardImg width="100%" src="logo192.png" />
