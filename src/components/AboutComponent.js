@@ -83,13 +83,6 @@ export default class About extends Component {
                 Very simple twin-stick style game. Made with pygame. Click <a onClick={this.toggleModal} className="game-link">here</a> to play.
               </CardBody>
             </Card>
-
-          </div>
-          <div className="col-4">
-            <Card>
-              <CardImg width="100%" src="logo192.png" />
-              <CardTitle>Placeholder</CardTitle>
-            </Card>
           </div>
         </div>
       </div>
