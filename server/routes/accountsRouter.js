@@ -24,12 +24,13 @@ accountsRouter.route("/login").post((req, res) => {
     'SELECT * FROM users WHERE user_username = ?', [data.username],
     (err, results) => {
       if (err) console.log(err);
+      console.log(results)
       if (results.rows.length < 1) {
         console.log("Not found!");
         res.status(400).json("Account not found!");
       } else {
         let check = bcrypt.compareSync(
-          req.body.password,
+          data.password,
           results.rows[0].user_password
         );
         if (check === true) {
