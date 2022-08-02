@@ -19,9 +19,9 @@ const pool = new Pool({
 
 accountsRouter.route("/login").post((req, res) => {
   data = req.body;
-  console.log(data)
+  //console.log(data)
   pool.query(
-    'SELECT * FROM users WHERE user_username = ?'[data.username],
+    'SELECT * FROM users WHERE user_username = ?', [data.username],
     (err, results) => {
       if (err) console.log(err);
       if (results.rows.length < 1) {
