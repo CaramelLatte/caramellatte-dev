@@ -57,7 +57,7 @@ accountsRouter.route("/register").post((req, res) => {
       }
       if (result.rows.length < 1) {
         pool.query(
-          `INSERT INTO users (user_username, user_password) VALUES ($1, '${hash}')`, [body.username]
+          `INSERT INTO users (user_username, user_password) VALUES ($1, '${hash}')`, [data.username]
         );
         res
           .status(200)
