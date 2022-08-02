@@ -45,18 +45,19 @@ accountsRouter.route("/login").post((req, res) => {
 });
 
 accountsRouter.route("/register").post((req, res) => {
+  let data = req.body;
   let password = req.body.password;
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
   pool.query(
-    `SELECT $::req.body.name FROM users WHERE user_username = '${req.body.username}'`,
+    `SELECT $1 FROM users WHERE user_username = $2`, [data.username, data.password],
     (err, result) => {
       if (err) {
         console.log(err);
       }
       if (result.rows.length < 1) {
         pool.query(
-          `INSERT INTO users (user_username, user_password) VALUES ('${req.body.username}', '${hash}')`
+          `INSERT INTO users (user_username, user_password) VALUES ($1, '${hash}')`. [body.username]
         );
         res
           .status(200)
