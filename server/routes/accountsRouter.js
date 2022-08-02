@@ -23,7 +23,8 @@ accountsRouter.route("/login").post((req, res) => {
   pool.query(
     'SELECT * FROM users WHERE user_username = ?', [data.username],
     (err, results) => {
-      console.log(err, results)
+      console.log(`${err}, 
+      ${results}`)
       if (err) console.log(err);
       if (results.rows.length < 1) {
         console.log("Not found!");
