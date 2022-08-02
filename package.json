@@ -18,6 +18,7 @@
     "font-awesome": "^4.7.0",
     "heroku-cli": "^7.0.9",
     "jquery": "^3.5.1",
+    "live-server": "^1.2.2",
     "morgan": "^1.10.0",
     "node-fetch": "^3.0.0",
     "nodemon": "^2.0.14",
@@ -46,7 +47,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch": "sass --watch src:src"
+    "watch": "sass --watch src:src",
+    "live": "live-server"
   },
   "eslintConfig": {
     "extends": [
