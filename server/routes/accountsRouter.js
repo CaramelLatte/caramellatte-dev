@@ -57,7 +57,7 @@ accountsRouter.route("/register").post((req, res) => {
       }
       if (result.rows.length < 1) {
         pool.query(
-          `INSERT INTO users (user_username, user_password) VALUES ($1, '${hash}')`. [body.username]
+          `INSERT INTO users (user_username, user_password) VALUES ($1, '${hash}')`, [body.username]
         );
         res
           .status(200)
@@ -70,15 +70,16 @@ accountsRouter.route("/register").post((req, res) => {
 });
 
 accountsRouter.route("/delete").delete((req, res) => {
+  data = req.body
   pool.query(
-    `SELECT * FROM users WHERE user_username = '${req.body.username}'`,
+    `SELECT * FROM users WHERE user_username = $1`, [data.username],
     (err, results) => {
       if (err) {
         console.log(err);
       }
       if (results.rows.length >= 1) {
         pool.query(
-          `DELETE FROM users WHERE user_username = '${req.body.username}'`
+          `DELETE FROM users WHERE user_username = $1`, [data.username]
         );
         res.status(200).json("Account deleted");
       }
