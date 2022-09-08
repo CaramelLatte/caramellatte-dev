@@ -182,7 +182,7 @@ export default class Games extends Component {
   };
   checkLogged = () => {
     if (this.state.isLogged === "false")
-  }
+  };
 
   render() {
     return (
