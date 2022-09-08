@@ -121,7 +121,9 @@ class Header extends Component {
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  Log in for games
+                  <NavLink className="nav-link" to="/">
+                    Log in for games
+                  </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav-link" to="/about">
