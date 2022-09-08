@@ -13,9 +13,6 @@ class Main extends Component {
     const HomePage = () => {
       return <Home />;
     };
-    // const CertificatesPage = () => {
-    //   return <Certificates />;
-    // };
     const AboutPage = () => {
       return <About />;
     };
