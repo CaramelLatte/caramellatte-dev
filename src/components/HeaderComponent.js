@@ -120,15 +120,8 @@ class Header extends Component {
                     Home
                   </NavLink>
                 </NavItem>
-                {/* <NavItem>
-                  <NavLink className="nav-link" to="/certificates">
-                    Certificates
-                  </NavLink>
-                </NavItem> */}
                 <NavItem>
-                  <NavLink className="nav-link" to="/games">
-                    Games
-                  </NavLink>
+                  Log in for games
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav-link" to="/about">
