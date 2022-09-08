@@ -17,7 +17,6 @@ import {
   Label,
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
-// import LoginComponent from "./loginModalComponent";
 import axios from "axios";
 
 class Header extends Component {
@@ -191,6 +190,9 @@ class Header extends Component {
             toggle={this.toggleRegister}>
             <ModalHeader toggle={this.toggleRegister}>Register</ModalHeader>
             <ModalBody>
+              <div>
+                Must be logged in to interact with game servers (see 'Games' page)
+              </div>
               <Form onSubmit={this.handleRegister}>
                 <FormGroup>
                   <Label htmlFor="username">Username</Label>
@@ -210,7 +212,7 @@ class Header extends Component {
                     handleRef={(input) => (this.password = input)}
                   />
                 </FormGroup>
-                <FormGroup check>
+                {/* <FormGroup check>
                   <Label check htmlFor="remember">
                     <Input
                       type="checkbox"
@@ -220,8 +222,8 @@ class Header extends Component {
                     />
                     Remember Me
                   </Label>
-                </FormGroup>
-                <FormGroup></FormGroup>
+                </FormGroup> */}
+                {/* <FormGroup></FormGroup> */}
                 <FormGroup>
                   <Button type="submit" value="submit">
                     Register
