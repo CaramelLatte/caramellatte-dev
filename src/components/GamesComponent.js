@@ -48,7 +48,7 @@ export default class Games extends Component {
       url: this.state.url + "update"
     })
       .then((data) => {
-        console.log(data.data)
+        //console.log(data.data)
         this.mineServUpdate(data.data);
         this.valServUpdate(data.data)
       })
@@ -65,7 +65,7 @@ export default class Games extends Component {
     })
       .then((data) => {
         this.mineServUpdate(data.data);
-        console.log(data.data);
+        //console.log(data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -130,7 +130,7 @@ export default class Games extends Component {
     })
       .then((data) => {
         this.valServUpdate(data.data);
-        console.log(data.data);
+        //console.log(data.data);
       })
       .catch((err) => {
         console.log(err);
