@@ -138,6 +138,10 @@ class Header extends Component {
           <Modal isOpen={this.state.isLoginOpen} toggle={this.toggleModal}>
             <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
             <ModalBody>
+              <div>
+                Must be logged in to interact with game servers (see 'Games' page)
+              </div>
+              <hr />
               <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
                   <Label htmlFor="username">Username</Label>
@@ -157,7 +161,7 @@ class Header extends Component {
                     handleRef={(input) => (this.password = input)}
                   />
                 </FormGroup>
-                <FormGroup check>
+                {/* <FormGroup check>
                   <Label check htmlFor="remember">
                     <Input
                       type="checkbox"
@@ -167,7 +171,7 @@ class Header extends Component {
                     />
                     Remember Me
                   </Label>
-                </FormGroup>
+                </FormGroup> */}
                 <FormGroup>
                   <Button value="submit" type="submit">
                     Login
@@ -186,8 +190,9 @@ class Header extends Component {
             <ModalHeader toggle={this.toggleRegister}>Register</ModalHeader>
             <ModalBody>
               <div>
-                Must be logged in to interact with game servers (see 'Games' page)
+                Passwords are secured, but please make sure that you use a password that's unique from the passwords you use on other sites.
               </div>
+              <hr />
               <Form onSubmit={this.handleRegister}>
                 <FormGroup>
                   <Label htmlFor="username">Username</Label>
