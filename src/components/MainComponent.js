@@ -24,11 +24,11 @@ class Main extends Component {
       <div className="App">
         <Header></Header>
         <Switch>
-          <Route exact path="/home" component={HomePage} />
+          {/* <Route exact path="/home" component={HomePage} /> */}
           {/* <Route exact path="/certificates" component={CertificatesPage} /> */}
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/games" component={GamesPage} />
-          <Redirect to="/home" />
+          <Redirect to="/about" />
         </Switch>
       </div>
     );
