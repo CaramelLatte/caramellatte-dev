@@ -252,11 +252,11 @@ class Header extends Component {
             <NavbarToggler onClick={this.toggleNav} />
             <Collapse isOpen={this.state.isNavOpen} navbar>
               <Nav className="col" navbar>
-                <NavItem>
+                {/* <NavItem>
                   <NavLink className="nav-link" to="/home">
                     Home
                   </NavLink>
-                </NavItem>
+                </NavItem> */}
                 {/* <NavItem> */}
                 {/* <NavLink className="nav-link" to="/certificates">
                     Certificates
