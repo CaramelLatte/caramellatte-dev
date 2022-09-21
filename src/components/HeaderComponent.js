@@ -263,13 +263,13 @@ class Header extends Component {
                   </NavLink>
                 </NavItem> */}
                 <NavItem>
-                  <NavLink className="nav-link" to="/games">
-                    Games
+                  <NavLink className="nav-link" to="/about">
+                    About Me
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav-link" to="/about">
-                    About Me
+                  <NavLink className="nav-link" to="/games">
+                    Games
                   </NavLink>
                 </NavItem>
                 {/* <NavItem>
