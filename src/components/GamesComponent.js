@@ -104,6 +104,9 @@ export default class Games extends Component {
         this.setState({ minePlayers: 0})
       }
     }
+    else {
+      this.setState({ minePlayers: 0})
+    }
   };
 
   valServUpdate = (data) => {
