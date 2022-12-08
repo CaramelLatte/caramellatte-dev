@@ -96,7 +96,7 @@ export default class Games extends Component {
     else {
       this.setState({mineServ: "offline"})
     }
-    if (data.player_count) {
+    if (data.player_count > 0) {
       if (this.state.mineServ === "online") {
       this.setState({ minePlayers: data.player_count });
       }
