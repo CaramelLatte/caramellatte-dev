@@ -40,6 +40,7 @@ export default class Games extends Component {
   }
   componentDidMount = () => {
     this.runCheck();
+    this.timer.start();
   };
 
   runCheck = () => {
