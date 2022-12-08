@@ -117,13 +117,16 @@ export default class Games extends Component {
     else {
       this.setState({valServ: "offline"})
     }
-    if (data.player_count) {
+    if (data.player_count > 0) {
       if (this.state.valServ === "online") {
       this.setState({ valPlayers: data.player_count });
       }
       else {
       this.setState({ valPlayers: 0 });
       }
+    }
+    else {
+      this.setState({ minePlayers: 0})
     }
   };
   startValheim = () => {
