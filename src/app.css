@@ -1,0 +1,35 @@
+.App {
+  background-color: #fefbea;
+  min-height: 100vh;
+}
+
+
+.App-link {
+  color: #61dafb;
+}
+
+.jumbotron {
+  background-color: #6d7993;
+  color: white;
+}
+
+.header-bar {
+  background-color: #96858f;
+  color: white;
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  margin: 1rem;
+  display: block; 
+}
+
+.content {
+  background-color: #d5d5d5;
+  padding: 10px;
+  border: 2px solid #9099a2;
+}
