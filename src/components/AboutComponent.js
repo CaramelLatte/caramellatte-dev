@@ -5,8 +5,8 @@ function About() {
     return (
         <div className="container">
             <div className="content">
-                <p>Hi, I'm Jared. I consume coffee in irresponsible quantities and I like coding.
-                    This is my personal site to showcase some of my personal projects. Feel free to look around.</p>
+                Hi, I'm Jared. I consume coffee in irresponsible quantities and I like coding.
+                    This is my personal site to showcase some of my personal projects. Feel free to look around.
                 If you'd like to reach out and connect, the
                 most convenient way is through my{" "}
                 <a

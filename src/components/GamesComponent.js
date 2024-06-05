@@ -1,30 +1,61 @@
-import React from 'react';
-import { Card, CardImg, CardBody, CardTitle, CardText } from 'reactstrap';
-
-//placeholder, this will eventually be fetched via axios call
-let games = [
-    { game: 'Minecraft', logo: 'https://upload.wikimedia.org/wikipedia/en/3/32/Minecraft_logo.png', status: 'Offline', port: '25565' },
-    { game: 'Valheim', logo: 'https://upload.wikimedia.org/wikipedia/en/3/32/Minecraft_logo.png', status: 'Offline', port: '2456' }
-];
-
-function renderGameCards(games) {
-    return (
-        <div className='game-cards col'>
-            {games.map((game, index) => (
-                <Card className='game-card col-2' key={index}>
-                    <CardImg top src={game.logo} alt={game.game} className='game-logo' />
-                    <CardBody>
-                        <CardTitle className='game-title'>{game.game}</CardTitle>
-                        <CardText className='game-status'>Status: {game.status}</CardText>
-                        <CardText className='game-port'>Port: {game.port}</CardText>
-                    </CardBody>
-                </Card>
-            ))}
-        </div>
-    );
-}
+import React, { useState, useEffect } from 'react';
+import { Card, CardImg, CardBody, CardTitle, CardText, Button } from 'reactstrap';
 
 function Games() {
+    const [games, setGames] = useState([]);
+    const [playercount, setPlayercount] = useState(0);
+
+        useEffect(() => {
+            fetch('https://games.caramellatte.dev:8080/update')
+                .then(response => response.json())
+                .then(data => {
+                    setGames(data.games);
+                    setPlayercount(data.player_count);
+                })
+                .catch(error => {
+                    console.error('Error fetching games data:', error);
+                });
+        }, []);
+
+    
+    function renderGameCards(games) {
+        return (
+            <div className='game-card-container'>
+                {games.map((game, index) => (
+                    console.log(game),
+                    <div className='col-xs-8'>
+                        <Card className='game-card' key={index}>
+                            <CardImg top src={game.logo} alt={game.name} className='game-logo' />
+                            <CardTitle className='game-title border-top border-bottom text-success' tag="h5">{game.name}</CardTitle>
+                            <CardBody>
+                                <div className='game-status'>Server is: {game.status}{(game.status === true) ?
+                                    <div className='online-indicator'><span className="online-blink"></span></div> : <div className='offline-indicator'></div>}
+                                </div>
+                                <div className='game-status'>Online players: {(game.status === true) ? playercount : 0}</div>
+                                <div className="container">
+                                    <div className='row justify-content-center'>
+                                        <Button color="success" onClick={() => startServer(game)}>Start Server</Button>
+                                    </div>
+                                    <div className='row justify-content-center'>
+                                        <Button color="danger" onClick={() => stopServer(game)}>Stop Server</Button>
+                                    </div>
+                                </div>
+                                <CardText className='game-port'>Connect via: <br /> games.caramellatte.dev:{game.port}</CardText>
+                            </CardBody>
+                        </Card>
+                    </div>
+                ))}
+            </div>
+        );
+    }
+
+    function startServer(game) {
+        console.log("Starting server for " + game.name);
+    }
+    function stopServer(game) {
+        console.log("Stopping server for " + game.name);
+    }
+
     return (
         <div>
             <div className='container'>
@@ -38,8 +69,8 @@ function Games() {
                     If you have any issues or want to see specific games added to this page, let me know.
                 </div>
                 <div className='row'>
-                {renderGameCards(games)}
-            </div>
+                    {renderGameCards(games)}
+                </div>
             </div>
 
         </div>
