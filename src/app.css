@@ -111,3 +111,15 @@ span.online-blink {
   align-items: center;
   margin-top: 10px;
 }
+
+.project-card {
+  margin: 10px;
+  border: 2px solid #9099a2;
+  background-color: #fefbea;
+  width: 225px;
+  justify-content: center;
+}
+.site-title {
+  font-size: 28px;
+  padding-left: 75px;
+}

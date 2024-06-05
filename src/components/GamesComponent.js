@@ -1,31 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardImg, CardBody, CardTitle, CardText, Button } from 'reactstrap';
+import { Card, CardBody, CardTitle, CardText, Button } from 'reactstrap';
 
 function Games() {
     const [games, setGames] = useState([]);
     const [playercount, setPlayercount] = useState(0);
 
         useEffect(() => {
-            fetch('https://games.caramellatte.dev:8080/update')
-                .then(response => response.json())
-                .then(data => {
-                    setGames(data.games);
-                    setPlayercount(data.player_count);
-                })
-                .catch(error => {
-                    console.error('Error fetching games data:', error);
-                });
+            function fetchGames() {
+                    fetch('https://games.caramellatte.dev:8080/update')
+                    .then(response => response.json())
+                    .then (data => {
+                        setGames(data.games);
+                        setPlayercount(data.player_count);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching games data:', error);
+                    });
+            }
+            fetchGames();
+            const intervalID = setInterval(fetchGames, 3000);
+            return () => clearInterval(intervalID);
         }, []);
 
-    
+        function fetchGameIcons(gameIcon) {
+            return "https://games.caramellatte.dev:8080/image/" + gameIcon;
+        }
+
     function renderGameCards(games) {
         return (
             <div className='game-card-container'>
                 {games.map((game, index) => (
-                    console.log(game),
-                    <div className='col-xs-8'>
-                        <Card className='game-card' key={index}>
-                            <CardImg top src={game.logo} alt={game.name} className='game-logo' />
+                    <div className='col-xs-8' key={index}>
+                        <Card className='game-card'>
+                            <img src={fetchGameIcons(game.name)}></img>
                             <CardTitle className='game-title border-top border-bottom text-success' tag="h5">{game.name}</CardTitle>
                             <CardBody>
                                 <div className='game-status'>Server is: {game.status}{(game.status === true) ?
@@ -50,14 +57,15 @@ function Games() {
     }
 
     function startServer(game) {
-        console.log("Starting server for " + game.name);
+        fetch(fetch('https://games.caramellatte.dev:8080/' + game.name + '/start'))
     }
     function stopServer(game) {
-        console.log("Stopping server for " + game.name);
+        fetch(fetch('https://games.caramellatte.dev:8080/' + game.name + '/stop'))
     }
 
     return (
         <div>
+            <br />
             <div className='container'>
                 <div className='content'>
                     This is a control panel allow for remotely controlling a number of dedicated game servers. Consider this a functional demonstration rather than a completed project. More features and additional games will be added in the future.
