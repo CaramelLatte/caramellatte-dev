@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import About from './components/AboutComponent';
 import Header from './components/HeaderComponent';
 import Games from './components/GamesComponent';
@@ -13,6 +13,8 @@ function App() {
           <Routes>
             <Route path="/about" element={<About />} />
             <Route path="/games" element={<Games />} />
+            <Route path="*" element={<Navigate to="/about" replace />}
+    />
           </Routes>
       </BrowserRouter>
     </div>
