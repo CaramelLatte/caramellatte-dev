@@ -13,8 +13,7 @@ function App() {
           <Routes>
             <Route path="/about" element={<About />} />
             <Route path="/games" element={<Games />} />
-            <Route path="*" element={<Navigate to="/about" replace />}
-    />
+            <Route path="*" element={<Navigate to="/about" replace />}/>
           </Routes>
       </BrowserRouter>
     </div>
