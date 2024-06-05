@@ -3,9 +3,7 @@ const express = require("express");
 const app = express();
 const publicPath = path.join(__dirname, "/../build/");
 const port = process.env.PORT || 5000;
-const logger = require("morgan");
 let bp = require("body-parser");
-const webpack = require('webpack')
 
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
