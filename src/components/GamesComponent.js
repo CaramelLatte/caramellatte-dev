@@ -32,7 +32,7 @@ function Games() {
                 {games.map((game, index) => (
                     <div className='col-xs-8' key={index}>
                         <Card className='game-card'>
-                            <img src={fetchGameIcons(game.name)}></img>
+                            <img src={fetchGameIcons(game.name)} alt={game.name}></img>
                             <CardTitle className='game-title border-top border-bottom text-success' tag="h5">{game.name}</CardTitle>
                             <CardBody>
                                 <div className='game-status'>Server is: {game.status}{(game.status === true) ?

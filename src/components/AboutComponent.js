@@ -25,7 +25,7 @@ function About() {
             <div className="row">
                 <div className="col xs={8} md={4}">
                     <Card className='project-card'>
-                        <a href="https://github.com/CaramelLatte/game-server" target="_blank">
+                        <a href="https://github.com/CaramelLatte/game-server" target="_blank" rel="noreferrer">
                             <CardImg width="10%" src="python-logo.png" />
                         </a>
                         <CardTitle className="text-center border-bottom border-top">
@@ -40,13 +40,12 @@ function About() {
                 </div>
                 <div className="col xs={12} md={4}">
                     <Card className='project-card'>
-                        <a href="https://github.com/CaramelLatte/NotLN_game" target="_blank">
+                        <a href="https://github.com/CaramelLatte/NotLN_game" target="_blank" rel="noreferrer">
                             <CardImg width="10%" src="pygame-logo.png" />
                         </a>
                         <CardTitle className="text-center border-bottom border-top">Night of the Living Nerds</CardTitle>
                         <CardBody>
-                            {/* Very simple twin-stick style game. Made with pygame. Click <a onClick={this.toggleModal} className="game-link">here</a> to play. */}
-                            Very simple twin-stick style game. Made with pygame. Click <a href="https://replit.com/@VanillaAffogato/Night-of-the-Living-Nerds" target="_blank">here</a> to play
+                            Very simple twin-stick style game. Made with pygame. Click <a href="https://replit.com/@VanillaAffogato/Night-of-the-Living-Nerds" target="_blank" rel="noreferrer">here</a> to play (Free replit account needed)
                         </CardBody>
                     </Card>
                 </div>
