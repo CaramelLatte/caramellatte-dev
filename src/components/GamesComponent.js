@@ -30,7 +30,7 @@ function Games() {
         return (
             <div className='game-card-container'>
                 {games.map((game, index) => (
-                    <div className='col-xs-8' key={index}>
+                    <div className='col-xs-6 col-md-4 col-xl-3' key={index}>
                         <Card className='game-card'>
                             <img src={fetchGameIcons(game.name)} alt={game.name}></img>
                             <CardTitle className='game-title border-top border-bottom text-success' tag="h5">{game.name}</CardTitle>
