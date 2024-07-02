@@ -74,7 +74,7 @@ function Games() {
                     <br /><br />
                     Using this page is simple. You may start or stop any of the servers by clicking the corresponding button. The status of the server will be updated in real time. Once the server you wish to use is online, you may connect to it in your game client using the provided IP address and port in the format "IP:PORT". Note that some games may not require specifying a port at all, in which case the base IP will be sufficient. Please note also that this system will take a few seconds to update its status and allow further actions after starting or stopping a server, so if you click a button and don't see the response you expect, wait a few seconds and try again.
                     <br /><br />
-                    If you have any issues or want to see specific games added to this page, let me know.
+                    If you have any issues or want to see specific games added to this page, you can either contact me directly or send an email to admin@caramellatte.dev.
                 </div>
                 <div className='row'>
                     {renderGameCards(games)}

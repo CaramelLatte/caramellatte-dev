@@ -37,9 +37,6 @@
 .game-card-container {
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: left; */
-  /* align-items: center; */
-  /* min-width: 225px; */
 }
 
 .game-card {
@@ -127,5 +124,4 @@ span.online-blink {
   .game-card-container {
     justify-content: center;
   }
-  
 }
