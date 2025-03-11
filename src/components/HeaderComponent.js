@@ -9,6 +9,7 @@ function Header() {
             <div className='header-bar'>
                 <Link className="nav-link" to="/about">About</Link>
                 <Link className="nav-link" to="/games">Games</Link>
+                <Link className="nav-link" to="/rate-quote-tool">Rate Quote Tool</Link>
             </div>
         </div>
         </div>
