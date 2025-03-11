@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import About from './components/AboutComponent';
 import Header from './components/HeaderComponent';
 import Games from './components/GamesComponent';
-import RateQuoteTool from './components/FreightQuote';
 import "./app.css"
 
 
