@@ -68,6 +68,7 @@ function Games() {
             <br />
             <div className='container'>
                 <div className='content'>
+                    ***TEMPORARILY DOWN WHILE SERVER MOVES TO NEW HARDWARE***
                     This is a control panel allow for remotely controlling a number of dedicated game servers. Consider this a functional demonstration rather than a completed project. More features and additional games will be added in the future.
                     <br /><br />
                     Currently, use of this page is unrestricted. A login system will be added at a later date, to restrict access and allow for logging of user actions.
