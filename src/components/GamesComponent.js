@@ -7,7 +7,7 @@ function Games() {
 
         useEffect(() => {
             function fetchGames() {
-                    fetch('https://games.caramellatte.dev:6174/update')
+                    fetch('https://games.caramellatte.dev:8080/update')
                     .then(response => response.json())
                     .then (data => {
                         setGames(data.games);
@@ -23,7 +23,7 @@ function Games() {
         }, []);
 
         function fetchGameIcons(gameIcon) {
-            return "https://games.caramellatte.dev:6174/image/" + gameIcon;
+            return "https://games.caramellatte.dev:8080/image/" + gameIcon;
         }
 
     function renderGameCards(games) {
@@ -57,10 +57,10 @@ function Games() {
     }
 
     function startServer(game) {
-        fetch(fetch('https://games.caramellatte.dev:6174/' + game.name + '/start'))
+        fetch(fetch('https://games.caramellatte.dev:8080/' + game.name + '/start'))
     }
     function stopServer(game) {
-        fetch(fetch('https://games.caramellatte.dev:6174/' + game.name + '/stop'))
+        fetch(fetch('https://games.caramellatte.dev:8080/' + game.name + '/stop'))
     }
 
     return (
@@ -68,7 +68,6 @@ function Games() {
             <br />
             <div className='container'>
                 <div className='content'>
-                    ***TEMPORARILY DOWN WHILE SERVER MOVES TO NEW HARDWARE***
                     This is a control panel allow for remotely controlling a number of dedicated game servers. Consider this a functional demonstration rather than a completed project. More features and additional games will be added in the future.
                     <br /><br />
                     Currently, use of this page is unrestricted. A login system will be added at a later date, to restrict access and allow for logging of user actions.

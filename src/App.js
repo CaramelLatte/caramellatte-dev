@@ -15,7 +15,6 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/games" element={<Games />} />
             <Route path="*" element={<Navigate to="/about" replace />}/>
-            <Route path="/rate-quote-tool" element={<RateQuoteTool />} />
           </Routes>
       </BrowserRouter>
     </div>
