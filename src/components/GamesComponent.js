@@ -4,6 +4,7 @@ import { Card, CardBody, CardTitle, CardText, Button } from 'reactstrap';
 function Games() {
     const [games, setGames] = useState([]);
     const [playercount, setPlayercount] = useState(0);
+    const [playerlist, setPlayerlist] = useState([]);
 
         useEffect(() => {
             function fetchGames() {
@@ -12,6 +13,7 @@ function Games() {
                     .then (data => {
                         setGames(data.games);
                         setPlayercount(data.player_count);
+                        setPlayerlist(data.players);
                     })
                     .catch(error => {
                         console.error('Error fetching games data:', error);
@@ -29,29 +31,44 @@ function Games() {
     function renderGameCards(games) {
         return (
             <div className='game-card-container'>
-                {games.map((game, index) => (
-                    <div className='col-xs-6 col-md-4 col-xl-3' key={index}>
-                        <Card className='game-card'>
-                            <img src={fetchGameIcons(game.name)} alt={game.name}></img>
-                            <CardTitle className='game-title border-top border-bottom text-success' tag="h5">{game.name}</CardTitle>
-                            <CardBody>
-                                <div className='game-status'>Server is: {game.status}{(game.status === true) ?
-                                    <div className='online-indicator'><span className="online-blink"></span></div> : <div className='offline-indicator'></div>}
-                                </div>
-                                <div className='game-status'>Online players: {(game.status === true) ? playercount : 0}</div>
-                                <div className="container">
-                                    <div className='row justify-content-center'>
-                                        <Button color="success" onClick={() => startServer(game)}>Start Server</Button>
-                                    </div>
-                                    <div className='row justify-content-center'>
-                                        <Button color="danger" onClick={() => stopServer(game)}>Stop Server</Button>
-                                    </div>
-                                </div>
-                                <CardText className='game-port'>Connect via: <br /> games.caramellatte.dev:{game.port}</CardText>
-                            </CardBody>
-                        </Card>
+            {games.map((game, index) => (
+            <div className='col-xs-6 col-md-4 col-xl-3' key={index}>
+            <Card className='game-card'>
+                <img src={fetchGameIcons(game.name)} alt={game.name}></img>
+                <CardTitle className='game-title border-top border-bottom text-success' tag="h5">{game.name}</CardTitle>
+                <CardBody>
+                <div className='game-status'>Server is: {game.status}{(game.status === true) ?
+                <div className='online-indicator'><span className="online-blink"></span></div> : <div className='offline-indicator'></div>}
+                </div>
+                {game.status === true && (
+                <div className='game-status'>
+                Online players: {
+                    playercount > 0 ? (
+                    <div className="tooltip-container">
+                        <span className="text-primary player-count">
+                            {playercount}
+                            <div className="tooltip-text">
+                                {playerlist.join(', ')}
+                            </div>
+                        </span>
                     </div>
-                ))}
+                    ) : '0'
+                }
+                </div>
+                )}
+                <div className="container">
+                <div className='row justify-content-center'>
+                <Button color="success" onClick={() => startServer(game)}>Start Server</Button>
+                </div>
+                <div className='row justify-content-center'>
+                <Button color="danger" onClick={() => stopServer(game)}>Stop Server</Button>
+                </div>
+                </div>
+                <CardText className='game-port'>Connect via: <br /> games.caramellatte.dev:{game.port}</CardText>
+                </CardBody>
+            </Card>
+            </div>
+            ))}
             </div>
         );
     }

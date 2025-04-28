@@ -125,3 +125,59 @@ span.online-blink {
     justify-content: center;
   }
 }
+
+.tooltip-container {
+
+  position: relative;
+
+  display: inline-block;
+
+}
+
+
+
+.player-count {
+
+  cursor: pointer;
+
+}
+
+
+
+.tooltip-text {
+
+  position: absolute;
+
+  bottom: 100%;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  background-color: rgba(0,0,0,0.8);
+
+  color: white;
+
+  padding: 5px 10px;
+
+  border-radius: 4px;
+
+  white-space: nowrap;
+
+  visibility: hidden;
+
+  opacity: 0;
+
+  transition: opacity 0.3s;
+
+}
+
+
+
+.tooltip-container:hover .tooltip-text {
+
+  visibility: visible;
+
+  opacity: 1;
+
+}
