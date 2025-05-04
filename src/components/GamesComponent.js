@@ -85,22 +85,12 @@ function Games() {
             <br />
             <div className='container'>
                 <div className='content'>
-                    This is a control panel allow for remotely controlling a number of dedicated game servers using docker containers. Consider this a functional demonstration rather than a completed project. More features and additional games will be added in the future.
+                    This is a control panel for remotely controlling a number of dedicated game servers using docker containers. More features and additional games will be added in the future. Currently, use of this page is unrestricted. Verification will be added later.
                     <br /><br />
-                    Currently, use of this page is unrestricted. Verification will be added later.
+                    Using this page is simple. You may start or stop any of the servers by clicking the corresponding button (Only one server may be active at a time). The status of the servers will be updated in real time. Once the server you wish to use is online, you may connect to it in your game client using the provided IP address and port in the format "URL:PORT". 
                     <br /><br />
-                    Using this page is simple. You may start or stop any of the servers by clicking the corresponding button. The status of the server will be updated in real time. Once the server you wish to use is online, you may connect to it in your game client using the provided IP address and port in the format "IP:PORT". Note that some games may not require specifying a port at all, in which case the base IP will be sufficient. Please note also that as the underlying servers are running from docker containers, you may need to wait several minutes before you can connect to them.
+                    Note that some games may not require specifying a port, in which case base address will be sufficient. Some games may only allow ipv4 addresses as well, in which case you can find the base IP address by running the command "nslookup games.caramellatte.dev" in your terminal for windows, or "dig games.caramellatte.dev" for linux. This will return the IP address of the server, which you can use in the same "IP:PORT" method.
                     <br /><br />
-                    The following features are either planned or have been implemented previously but are not yet available with this version of the project:
-
-                    <ul>
-                        <li>Show player count, player names</li>
-                        <li>Automatic shut-down when idle</li>
-                        <li>Options to specify configuration settings on container launch</li>
-                    </ul>
-                    
-                    <br /><br />
-
                     If you have any issues or want to see specific games added to this page, you can either contact me directly or send an email to admin@caramellatte.dev.
                 </div>
                 <div className='row'>
