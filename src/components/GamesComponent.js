@@ -31,44 +31,58 @@ function Games() {
     function renderGameCards(games) {
         return (
             <div className='game-card-container'>
-            {games.map((game, index) => (
-            <div className='col-xs-6 col-md-4 col-xl-3' key={index}>
-            <Card className='game-card'>
-                <img src={fetchGameIcons(game.name)} alt={game.name}></img>
-                <CardTitle className='game-title border-top border-bottom text-success' tag="h5">{game.name}</CardTitle>
-                <CardBody>
-                <div className='game-status'>Server is: {game.status}{(game.status === true) ?
-                <div className='online-indicator'><span className="online-blink"></span></div> : <div className='offline-indicator'></div>}
-                </div>
-                {game.status === true && (
-                <div className='game-status'>
-                Online players: {
-                    playercount > 0 ? (
-                    <div className="tooltip-container">
-                        <span className="text-primary player-count">
-                            {playercount}
-                            <div className="tooltip-text">
-                                {playerlist.join(', ')}
+            {games.map((game, index) => {
+                const online = game.status === true;
+                const statusLabel = online ? 'Online' : 'Offline';
+                const playerCountDisplay = playercount > 0 ? playercount : '0';
+                return (
+                    <Card className='game-card' key={index}>
+                        <div className="game-card-media">
+                            <img src={fetchGameIcons(game.name)} alt={game.name} />
+                            <span className={`status-pill ${online ? 'status-online' : 'status-offline'}`}>
+                                {statusLabel}
+                            </span>
+                        </div>
+                        <CardBody>
+                            <div className="game-card-header">
+                                <CardTitle tag="h5" className="game-title text-success">{game.name}</CardTitle>
+                                <div className="game-meta">
+                                    <div className="meta-block">
+                                        <span className="meta-label">Players</span>
+                                        {online ? (
+                                            <div className="tooltip-container">
+                                                <span className="player-count">
+                                                    {playerCountDisplay}
+                                                    <div className="tooltip-text">
+                                                        {playerlist.join(', ') || 'No active players'}
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        ) : (
+                                            <span className="player-count muted">Offline</span>
+                                        )}
+                                    </div>
+                                    <div className="meta-block">
+                                        <span className="meta-label">Port</span>
+                                        <span className="meta-value">{game.port}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </span>
-                    </div>
-                    ) : '0'
-                }
-                </div>
-                )}
-                <div className="container">
-                <div className='row justify-content-center'>
-                <Button color="success" onClick={() => startServer(game)}>Start Server</Button>
-                </div>
-                <div className='row justify-content-center'>
-                <Button color="danger" onClick={() => stopServer(game)}>Stop Server</Button>
-                </div>
-                </div>
-                <CardText className='game-port'>Connect via: <br /> games.caramellatte.dev:{game.port}</CardText>
-                </CardBody>
-            </Card>
-            </div>
-            ))}
+                            <div className="game-card-actions">
+                                <Button color="success" size="sm" onClick={() => startServer(game)}>
+                                    Start
+                                </Button>
+                                <Button color="danger" size="sm" onClick={() => stopServer(game)}>
+                                    Stop
+                                </Button>
+                            </div>
+                            <CardText className='game-port'>
+                                Connect via <span className="meta-value">games.caramellatte.dev:{game.port}</span>
+                            </CardText>
+                        </CardBody>
+                    </Card>
+                );
+            })}
             </div>
         );
     }
@@ -93,9 +107,7 @@ function Games() {
                     <br /><br />
                     If you have any issues or want to see specific games added to this page, you can either contact me directly or send an email to admin@caramellatte.dev.
                 </div>
-                <div className='row'>
-                    {renderGameCards(games)}
-                </div>
+                {renderGameCards(games)}
             </div>
 
         </div>
