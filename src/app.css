@@ -181,3 +181,42 @@ span.online-blink {
   opacity: 1;
 
 }
+
+.session-launcher-layout {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.session-launcher .session-iframe {
+  width: 100%;
+  min-height: 480px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #000;
+}
+
+.session-launcher .session-view {
+  background-color: #fefbea;
+  border: 1px solid #e2d9c5;
+}
+
+.session-launcher .session-placeholder {
+  text-align: center;
+}
+
+@media (min-width: 1200px) {
+  .session-launcher-layout {
+    padding-left: clamp(1.25rem, 2.5vw, 2.5rem);
+    padding-right: clamp(1.25rem, 2.5vw, 2.5rem);
+  }
+
+  .session-launcher .session-iframe {
+    min-height: 65vh;
+  }
+}
+
+@media (min-width: 1600px) {
+  .session-launcher .session-iframe {
+    min-height: 70vh;
+  }
+}
