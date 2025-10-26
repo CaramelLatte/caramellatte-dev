@@ -438,6 +438,10 @@ span.online-blink {
 }
 
 .session-meta {
+  background: linear-gradient(150deg, rgba(21, 33, 58, 0.95), rgba(12, 17, 30, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-soft);
   color: var(--text-muted);
 }
 
@@ -445,11 +449,126 @@ span.online-blink {
   color: var(--text-primary);
 }
 
+.session-meta-title {
+  color: var(--accent-strong);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.session-meta-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.session-meta-field:last-of-type {
+  border-bottom: none;
+}
+
+.session-meta-field .label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.session-meta-field .value {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
 .game-card .btn {
   width: 70%;
   margin: 0.25rem auto;
   display: block;
   border-radius: 999px;
+}
+
+.apps-page {
+  color: var(--text-primary);
+}
+
+.apps-page .text-muted {
+  color: var(--text-muted) !important;
+}
+
+.apps-page-inner {
+  max-width: 1100px;
+  background: linear-gradient(145deg, rgba(8, 12, 24, 0.85), rgba(5, 9, 18, 0.9));
+  border: 1px solid var(--card-border);
+  border-radius: 1.5rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  box-shadow: var(--shadow-soft);
+}
+
+.apps-hero {
+  margin-bottom: 2rem;
+}
+
+.apps-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.75rem;
+  color: var(--accent-strong);
+  margin-bottom: 0.75rem;
+}
+
+.apps-grid {
+  margin-top: 1rem;
+}
+
+.apps-card {
+  background: linear-gradient(160deg, rgba(19, 28, 48, 0.95), rgba(10, 16, 30, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+}
+
+.apps-card-body {
+  width: 100%;
+}
+
+.apps-card h3 {
+  color: var(--text-primary);
+}
+
+.apps-pill {
+  padding: 0.2rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(240, 168, 110, 0.15);
+  color: var(--accent-strong);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.apps-cta {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(15, 25, 46, 0.95), rgba(9, 13, 26, 0.95));
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.apps-cta h3 {
+  color: var(--text-primary);
+}
+
+.apps-cta .btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  border: none;
+  color: #1b1205;
+  font-weight: 600;
+}
+
+.apps-cta .btn-primary:hover {
+  filter: brightness(1.05);
 }
 
 .btn-success {

@@ -9,7 +9,7 @@ function Header() {
                     <p className="hero-kicker">Indie tinkering & espresso-fueled experiments</p>
                     <h1 className="site-title">Will Code for Coffee</h1>
                     <p className="hero-subtitle">
-                        A cozy hub for servers, prototypes, and whatever else keeps me entertained.
+                        A hub for servers, prototypes, and whatever else keeps me entertained.
                     </p>
                 </div>
                 <nav className="hero-nav">
@@ -18,6 +18,9 @@ function Header() {
                     </Link>
                     <Link className="nav-link" to="/games">
                         Games
+                    </Link>
+                    <Link className="nav-link" to="/apps">
+                        Apps
                     </Link>
                 </nav>
             </div>

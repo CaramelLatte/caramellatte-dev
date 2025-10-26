@@ -8,10 +8,14 @@ function About() {
             <div className="content">
                 Hi, I'm Jared. I consume coffee in irresponsible quantities and I like coding.
                 This is my personal site to showcase some of my projects. Feel free to look around.
-                If you'd like to reach out and connect, the
-                most convenient way is through my{" "}
+                If you'd like to reach out and connect, either by emailing {" "}
                 <a
-                    href="https://www.linkedin.com/in/jared-ekenstam-777348208/"
+                href="mailto:admin@caramellatte.dev">
+                admin@caramellatte.dev 
+                </a>
+                {" "} or through my{" "}
+                <a
+                    href="https://www.linkedin.com/in/jared-e-777348208/"
                     target="_blank"
                     rel="noreferrer">
                     LinkedIn profile
