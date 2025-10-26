@@ -76,9 +76,6 @@ function Games() {
                                     Stop
                                 </Button>
                             </div>
-                            <CardText className='game-port'>
-                                Connect via <span className="meta-value">games.caramellatte.dev:{game.port}</span>
-                            </CardText>
                         </CardBody>
                     </Card>
                 );

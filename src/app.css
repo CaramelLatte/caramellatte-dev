@@ -199,11 +199,14 @@ a:hover {
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .game-card-media {
   position: relative;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  overflow: hidden;
 }
 
 .game-card-media img {
@@ -354,6 +357,7 @@ span.online-blink {
 .tooltip-container {
   position: relative;
   display: inline-block;
+  z-index: 10;
 }
 
 .player-count {
@@ -362,6 +366,7 @@ span.online-blink {
 }
 
 .tooltip-text {
+  z-index: 20;
   position: absolute;
   bottom: 130%;
   left: 50%;
