@@ -92,11 +92,12 @@ function dispatchKeyboardEvent(targetWindow, type, actionId) {
     }
 }
 
-export default function useGamepadKeyboardBridge(getTargetWindow) {
+export default function useGamepadKeyboardBridge(getTargetWindow, options = {}) {
     const stateRef = useRef({
         rafId: null,
         activeKeys: new Set()
     });
+    const onInput = typeof options.onInput === 'function' ? options.onInput : null;
 
     useEffect(() => {
         if (typeof window === 'undefined' || typeof navigator === 'undefined' || typeof getTargetWindow !== 'function') {
@@ -112,14 +113,20 @@ export default function useGamepadKeyboardBridge(getTargetWindow) {
         const releaseKey = (actionId) => {
             const targetWindow = getTargetWindow();
             dispatchKeyboardEvent(targetWindow, 'keyup', actionId);
+            if (onInput) {
+                onInput(actionId, false);
+            }
             state.activeKeys.delete(actionId);
         };
 
         const pressKey = (actionId) => {
             const targetWindow = getTargetWindow();
             const success = dispatchKeyboardEvent(targetWindow, 'keydown', actionId);
-            if (success) {
+            if (success || !state.activeKeys.has(actionId)) {
                 state.activeKeys.add(actionId);
+            }
+            if (onInput) {
+                onInput(actionId, true);
             }
         };
 
@@ -224,5 +231,5 @@ export default function useGamepadKeyboardBridge(getTargetWindow) {
             window.removeEventListener('gamepaddisconnected', handleDisconnect);
             window.removeEventListener('blur', handleBlur);
         };
-    }, [getTargetWindow]);
+    }, [getTargetWindow, onInput]);
 }

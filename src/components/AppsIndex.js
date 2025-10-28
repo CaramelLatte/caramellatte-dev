@@ -25,8 +25,8 @@ function AppsIndex() {
             <div className="mx-auto apps-page-inner">
                 <section className="apps-hero text-center">
                     <p className="apps-kicker">Labs & Sidequests</p>
-                    <h2 className="display-6">Self-Hosted Apps</h2>
-                    <p className="text-muted mb-0">xpra-powered sandboxes, dreamy audio rigs, and whatever else I can coerce into a container. The cards below are placeholder, and just represent some ideas about what this dashboard may hold in the future</p>
+                    <h2 className="display-6">Self-Hosted Cloud</h2>
+                    <p className="text-muted mb-0">Xpra-powered sandboxes. Games, productivity apps, and whatever else I can coerce into a container. The cards below are placeholder, and just represent some ideas about what this dashboard may hold in the future</p>
                 </section>
 
                 <div className="row g-4 apps-grid">
@@ -50,9 +50,6 @@ function AppsIndex() {
                     <div className="card-body d-flex flex-column flex-md-row align-items-md-center gap-3">
                         <div>
                             <h3 className="h5 mb-1">Need something specific?</h3>
-                            <p className="text-muted mb-0">
-                                I can spin up bespoke xpra containers for jams, demos, or remote tinkering sessions.
-                            </p>
                         </div>
                         <Link className="btn btn-primary ms-md-auto" to="/about">
                             Say hello

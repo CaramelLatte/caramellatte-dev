@@ -12,13 +12,15 @@ function App() {
     <div className="App">
     <BrowserRouter>
           <Header />
-          <Routes>
-            <Route path="/about" element={<About />} />
-            <Route path="/games" element={<Games />} />
-            <Route path="/apps" element={<AppsIndex />} />
-            <Route path="/apps/retroarch" element={<RetroarchApp />} />
-            <Route path="*" element={<Navigate to="/about" replace />}/>
-          </Routes>
+          <main className="page-content">
+            <Routes>
+              <Route path="/about" element={<About />} />
+              <Route path="/games" element={<Games />} />
+              <Route path="/apps" element={<AppsIndex />} />
+              <Route path="/apps/retroarch" element={<RetroarchApp />} />
+              <Route path="*" element={<Navigate to="/about" replace />}/>
+            </Routes>
+          </main>
       </BrowserRouter>
     </div>
   );

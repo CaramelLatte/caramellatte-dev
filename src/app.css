@@ -10,6 +10,11 @@
   --success: #4ade80;
   --danger: #f87171;
   --shadow-soft: 0 20px 45px rgba(5, 7, 16, 0.65);
+  --hero-offset: clamp(9rem, 18vh, 14rem);
+}
+
+html {
+  scroll-padding-top: 0;
 }
 
 body {
@@ -26,6 +31,10 @@ body {
   padding-bottom: 4rem;
 }
 
+.page-content {
+  padding: clamp(1.5rem, 4vw, 3rem) 0 0;
+}
+
 a {
   color: var(--accent);
   text-decoration: none;
@@ -39,9 +48,7 @@ a:hover {
   padding: 3rem 1rem 2rem;
   background: linear-gradient(135deg, rgba(11, 25, 47, 0.95), rgba(5, 10, 20, 0.95));
   box-shadow: var(--shadow-soft);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  position: static;
 }
 
 .hero-inner {
@@ -601,6 +608,22 @@ span.online-blink {
 
   .card-grid {
     justify-content: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    scroll-padding-top: var(--hero-offset);
+  }
+
+  .site-hero {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .page-content {
+    padding-top: clamp(2rem, 6vh, 4rem);
   }
 }
 

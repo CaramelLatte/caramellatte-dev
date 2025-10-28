@@ -6,9 +6,9 @@ function About() {
         <div className="container">
             <br />
             <div className="content">
-                Hi, I'm Jared. I consume coffee in irresponsible quantities and I like coding.
-                This is my personal site to showcase some of my projects. Feel free to look around.
-                If you'd like to reach out and connect, either by emailing {" "}
+                Hi, I'm Jared. I consume coffee in irresponsible quantities and I like coding (except for front-end design, this site is shamelessly styled by AI).
+                This is my personal site to showcase some of my projects. Feel free to look around. 
+                If you'd like to reach out and connect, you can do so either by emailing {" "}
                 <a
                 href="mailto:admin@caramellatte.dev">
                 admin@caramellatte.dev 
