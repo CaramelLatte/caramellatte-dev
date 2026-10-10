@@ -1,28 +1,29 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+
+const NAV = [
+    { to: '/about', label: 'About' },
+    { to: '/games', label: 'Game Servers' },
+    { to: '/helpdesk', label: 'Helpdesk Sim' },
+];
 
 function Header() {
-    const { pathname } = useLocation();
-    const navLink = (to, label) => (
-        <Link className={`nav-link${pathname === to ? ' nav-link-active' : ''}`} to={to}>
-            {label}
-        </Link>
-    );
-
     return (
-        <header className="site-hero">
-            <div className="hero-inner">
-                <div className="hero-brand">
-                    {/* <p className="hero-kicker">Will Code for Coffee</p> */}
-                    <h1 className="site-title">Jared Ekenstam</h1>
-                    <p className="hero-subtitle">
-                        Tech enthusiast building backend systems, containerized infrastructure, and hands-on IT tooling.
-                    </p>
-                </div>
-                <nav className="hero-nav">
-                    {navLink('/about', 'About')}
-                    {navLink('/games', 'Games')}
-                    {navLink('/helpdesk', 'Helpdesk')}
+        <header className="site-header">
+            <div className="site-header-inner">
+                <Link to="/about" className="wordmark">
+                    Jared Ekenstam
+                </Link>
+                <nav className="site-nav" aria-label="Primary">
+                    {NAV.map(({ to, label }) => (
+                        <NavLink
+                            key={to}
+                            to={to}
+                            className={({ isActive }) => `site-nav-link${isActive ? ' is-active' : ''}`}
+                        >
+                            {label}
+                        </NavLink>
+                    ))}
                 </nav>
             </div>
         </header>

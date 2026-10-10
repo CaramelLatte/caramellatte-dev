@@ -21,41 +21,34 @@ const FUTURE_APPS = [
 
 function AppsIndex() {
     return (
-        <div className="apps-page container-fluid py-4">
-            <div className="mx-auto apps-page-inner">
-                <section className="apps-hero text-center">
-                    <p className="apps-kicker">Labs & Sidequests</p>
-                    <h2 className="display-6">Self-Hosted Cloud</h2>
-                    <p className="text-muted mb-0">A planned dashboard for self-hosted Xpra sandboxes - games, productivity tools, and other experiments. The cards below are upcoming ideas; nothing is deployed here yet.</p>
-                </section>
+        <div className="container">
+            <header className="page-header">
+                <p className="eyebrow">Labs</p>
+                <h1 className="page-title">Self-hosted cloud</h1>
+                <p className="page-lede">
+                    A planned dashboard for self-hosted Xpra sandboxes: games, productivity tools, and other
+                    experiments. These are upcoming ideas. Nothing is deployed here yet.
+                </p>
+            </header>
 
-                <div className="row g-4 apps-grid">
-                    {FUTURE_APPS.map((app) => (
-                        <div className="col-12 col-md-6 col-xl-4" key={app.name}>
-                            <div className="apps-card h-100">
-                                <div className="apps-card-body">
-                                    <div className="d-flex justify-content-between align-items-center mb-2">
-                                        <h3 className="h5 mb-0">{app.name}</h3>
-                                        <span className="apps-pill">{app.status}</span>
-                                    </div>
-                                    <p className="text-muted mb-3">{app.description}</p>
-                                    <div className="small text-muted fst-italic">Slots open soon-ping me if you want early access.</div>
-                                </div>
-                            </div>
+            <div className="apps-grid">
+                {FUTURE_APPS.map((app) => (
+                    <article className="panel" key={app.name}>
+                        <div className="apps-card-head">
+                            <h2 className="panel-title">{app.name}</h2>
+                            <span className="tag">{app.status}</span>
                         </div>
-                    ))}
-                </div>
+                        <p className="panel-text">{app.description}</p>
+                    </article>
+                ))}
+            </div>
 
-                <div className="apps-cta card mt-5">
-                    <div className="card-body d-flex flex-column flex-md-row align-items-md-center gap-3">
-                        <div>
-                            <h3 className="h5 mb-1">Need something specific?</h3>
-                        </div>
-                        <Link className="btn btn-primary ms-md-auto" to="/about">
-                            Say hello
-                        </Link>
-                    </div>
+            <div className="callout apps-cta">
+                <div>
+                    <div className="callout-title">Want early access or have an idea?</div>
+                    <p className="mb-0">I'm happy to talk through what's possible.</p>
                 </div>
+                <Link className="btn-ui btn-ui-primary" to="/about">Say hello</Link>
             </div>
         </div>
     );

@@ -15,11 +15,9 @@ function BlogPost() {
         return (
             <div className="container">
                 <div className="blog-not-found">
-                    <div className="about-section-label">Not Found</div>
-                    <h2 style={{ color: 'var(--text-primary)', marginBottom: '1.5rem' }}>
-                        Post doesn't exist.
-                    </h2>
-                    <Link to="/blog" className="project-link project-link-accent">
+                    <p className="eyebrow">Not found</p>
+                    <h1 className="page-title mb-4">That post doesn't exist.</h1>
+                    <Link to="/blog" className="text-link text-link-strong">
                         ← Back to blog
                     </Link>
                 </div>
@@ -31,7 +29,7 @@ function BlogPost() {
         <div className="container">
             <div className="blog-post-header">
                 <Link to="/blog" className="blog-back-link">← All posts</Link>
-                <div className="blog-card-tags" style={{ marginBottom: '0.75rem' }}>
+                <div className="blog-card-tags">
                     {post.tags.map(t => (
                         <span key={t} className="blog-card-tag">{TAGS[t] ?? t}</span>
                     ))}

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import About from './components/AboutComponent';
 import AppsIndex from './components/AppsIndex';
 import Header from './components/HeaderComponent';
+import Footer from './components/FooterComponent';
 import Games from './components/GamesComponent';
 import Helpdesk from './components/HelpdeskComponent';
 import BlogList from './components/BlogComponent';
@@ -25,6 +26,7 @@ function App() {
               <Route path="*" element={<Navigate to="/about" replace />}/>
             </Routes>
           </main>
+          <Footer />
       </BrowserRouter>
     </div>
   );

@@ -15,13 +15,13 @@ function BlogList() {
 
     return (
         <div className="container">
-            <div className="blog-header">
-                <div className="about-section-label">Blog</div>
-                <h2 className="blog-title">Notes & Write-ups</h2>
-                <p className="blog-subtitle">
+            <header className="page-header">
+                <p className="eyebrow">Blog</p>
+                <h1 className="page-title">Notes &amp; write-ups</h1>
+                <p className="page-lede">
                     Career journey, project deep-dives, CTF write-ups, and whatever else I'm learning.
                 </p>
-            </div>
+            </header>
 
             {usedTags.length > 0 && (
                 <div className="blog-tag-filter">
@@ -44,7 +44,7 @@ function BlogList() {
             )}
 
             {filtered.length === 0 ? (
-                <div className="blog-empty">
+                <div className="empty-state">
                     {posts.length === 0
                         ? 'No posts yet - first one is in the works.'
                         : 'No posts with this tag.'}

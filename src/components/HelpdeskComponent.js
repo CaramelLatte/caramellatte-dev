@@ -197,18 +197,42 @@ function Helpdesk() {
         return (
             <div className="hd-page container-fluid py-4">
                 <div className="hd-inner mx-auto">
-                    <section className="hd-hero text-center mb-4">
-                        <p className="hd-kicker">IT Helpdesk Simulator</p>
-                        <h2 className="display-6 mb-2">Choose a Scenario</h2>
-                        <p className="text-muted mb-0">
-                            Pick a ticket to work. Diagnose the issue, communicate with the user, run diagnostics, then resolve or escalate.
+                    <header className="page-header">
+                        <p className="eyebrow">Live project</p>
+                        <h1 className="page-title">IT Helpdesk Simulator</h1>
+                        <p className="page-lede">
+                            Work a realistic support ticket from start to finish. Talk to the end user, run diagnostics,
+                            then resolve or escalate. A locally hosted LLM plays the user and grades your work.
                         </p>
-                    </section>
+                    </header>
+
+                    <div className="hd-howto mb-4">
+                        <ol className="hd-howto-steps">
+                            <li className="hd-howto-step">
+                                <span className="hd-howto-num">1</span>
+                                <span>Read the user's opening message to understand the issue.</span>
+                            </li>
+                            <li className="hd-howto-step">
+                                <span className="hd-howto-num">2</span>
+                                <span>Run diagnostic commands in the Shell panel to investigate.</span>
+                            </li>
+                            <li className="hd-howto-step">
+                                <span className="hd-howto-num">3</span>
+                                <span>Reply in the Conversation panel. The AI persona responds automatically.</span>
+                            </li>
+                            <li className="hd-howto-step">
+                                <span className="hd-howto-num">4</span>
+                                <span>When you're done, write resolution notes and submit for grading.</span>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <h2 className="section-title mb-3">Choose a scenario</h2>
 
                     {error && <div className="hd-error mb-3">{error}</div>}
 
                     {scenarios.length === 0 && !error && (
-                        <p className="text-center text-muted">Loading scenarios…</p>
+                        <div className="empty-state">Loading scenarios…</div>
                     )}
 
                     <div className="row g-3">
@@ -231,7 +255,7 @@ function Helpdesk() {
                                             <span className="hd-pill hd-pill-selected">Selected</span>
                                         )}
                                     </div>
-                                    <p className="text-muted mb-0" style={{ fontSize: '0.9rem' }}>
+                                    <p className="hd-scenario-desc">
                                         {typeof s === 'string' ? '' : (s.description ?? s.summary ?? '')}
                                     </p>
                                     {s.difficulty && (
@@ -244,42 +268,17 @@ function Helpdesk() {
                         ))}
                     </div>
 
-                    <div className="hd-howto mt-4">
-                        <div className="hd-howto-steps">
-                            <div className="hd-howto-step">
-                                <span className="hd-howto-num">1</span>
-                                <span>Read the user's opening message to understand the issue.</span>
-                            </div>
-                            <div className="hd-howto-step">
-                                <span className="hd-howto-num">2</span>
-                                <span>Run diagnostic commands in the Shell panel to investigate.</span>
-                            </div>
-                            <div className="hd-howto-step">
-                                <span className="hd-howto-num">3</span>
-                                <span>Reply to the user in the Conversation panel - the AI persona responds automatically.</span>
-                            </div>
-                            <div className="hd-howto-step">
-                                <span className="hd-howto-num">4</span>
-                                <span>When resolved, write your notes and submit for grading.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="hd-notice mt-3">
-                        <span className="hd-notice-icon">⚡</span>
-                        <span>
-                            This sim runs on personal self-hosted hardware using a local LLM.
-                            Persona replies and grading may take <strong>15–45 seconds</strong>, this is normal.
-                        </span>
-                    </div>
-
-                    <div className="text-center mt-4">
+                    <div className="hd-start-bar mt-4">
+                        <p className="hd-notice mb-0">
+                            Runs on self-hosted hardware with a local LLM. Persona replies and grading can
+                            take <strong>15–45 seconds</strong>.
+                        </p>
                         <button
-                            className="btn btn-primary btn-lg px-5"
+                            className="btn-ui btn-ui-primary"
                             disabled={!selected || starting}
                             onClick={startSession}
                         >
-                            {starting ? 'Starting…' : 'Start Session'}
+                            {starting ? 'Starting…' : 'Start session'}
                         </button>
                     </div>
                 </div>
@@ -291,21 +290,21 @@ function Helpdesk() {
         return (
             <div className="hd-page container-fluid py-4">
                 <div className="hd-inner mx-auto">
-                    <section className="hd-hero text-center mb-4">
-                        <p className="hd-kicker">Session Complete</p>
-                        <h2 className="display-6 mb-2">Grading Report</h2>
-                        <p className="text-muted">Ticket #{ticketId} · {typeof selected === 'string'
+                    <header className="page-header">
+                        <p className="eyebrow">Session complete</p>
+                        <h1 className="page-title">Grading report</h1>
+                        <p className="page-lede">Ticket #{ticketId} · {typeof selected === 'string'
                                                 ? selected.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
                                                 : (selected?.name ?? selected?.title ?? '')}</p>
-                    </section>
+                    </header>
 
                     <div className="hd-grade-card">
                         <GradeReport data={grade} />
                     </div>
 
-                    <div className="text-center mt-4">
-                        <button className="btn btn-primary px-5" onClick={reset}>
-                            Try Another Scenario
+                    <div className="mt-4">
+                        <button className="btn-ui btn-ui-primary" onClick={reset}>
+                            Try another scenario
                         </button>
                     </div>
                 </div>
@@ -315,11 +314,11 @@ function Helpdesk() {
 
     // phase === 'active'
     return (
-        <div className="hd-active container-fluid py-3">
+        <div className="hd-active py-3">
             {/* Ticket info bar */}
-            <div className="hd-ticketbar mb-3 mx-auto">
+            <div className="hd-ticketbar mb-3">
                 <div className="d-flex align-items-center gap-3 flex-wrap">
-                    <span className="hd-kicker mb-0" style={{ fontSize: '0.7rem' }}>Ticket #{ticketId}</span>
+                    <span className="hd-ticket-id">Ticket #{ticketId}</span>
                     <span className="hd-ticketbar-name">{typeof selected === 'string'
                                                 ? selected.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
                                                 : (selected?.name ?? selected?.title ?? '')}</span>
@@ -327,21 +326,20 @@ function Helpdesk() {
                 </div>
             </div>
 
-            <div className="hd-notice hd-notice-sm mb-3 mx-auto hd-active-inner">
-                <span className="hd-notice-icon">⚡</span>
-                <span>Running on self-hosted hardware with a local LLM. Persona replies and grading may take 15–45 seconds.</span>
-            </div>
+            <p className="hd-notice hd-notice-sm mb-3">
+                Running on self-hosted hardware with a local LLM. Persona replies and grading can take 15–45 seconds.
+            </p>
 
-            {error && <div className="hd-error mb-3 mx-auto hd-active-inner">{error}</div>}
+            {error && <div className="hd-error mb-3">{error}</div>}
 
-            <div className="row g-3 hd-active-inner mx-auto">
+            <div className="row g-3">
                 {/* Thread panel */}
                 <div className="col-12 col-lg-7 d-flex flex-column">
                     <div className="hd-panel hd-thread-panel flex-grow-1 d-flex flex-column">
                         <div className="hd-panel-label">Conversation</div>
                         <div className="hd-thread flex-grow-1">
                             {thread.length === 0 && (
-                                <p className="text-muted text-center" style={{ fontSize: '0.85rem', marginTop: '2rem' }}>
+                                <p className="hd-thread-empty">
                                     Waiting for the first message…
                                 </p>
                             )}
@@ -362,9 +360,9 @@ function Helpdesk() {
                                 }}
                             />
                             <div className="d-flex justify-content-between align-items-center mt-2">
-                                <small className="text-muted">Ctrl+Enter to send</small>
+                                <small className="hd-hint">Ctrl+Enter to send</small>
                                 <button
-                                    className="btn btn-primary btn-sm px-4"
+                                    className="btn-ui btn-ui-primary btn-ui-sm"
                                     onClick={sendMessage}
                                     disabled={!messageInput.trim() || sendingMsg}
                                 >
@@ -408,7 +406,7 @@ function Helpdesk() {
                                 onChange={e => setCommandInput(e.target.value)}
                                 onKeyDown={e => e.key === 'Enter' && runCommand()}
                             />
-                            <button className="btn btn-sm hd-btn-run" onClick={runCommand}>Run</button>
+                            <button className="hd-btn-run" onClick={runCommand}>Run</button>
                         </div>
                     </div>
 
@@ -449,7 +447,7 @@ function Helpdesk() {
                         />
 
                         <button
-                            className="btn btn-success w-100 d-flex align-items-center justify-content-center gap-2"
+                            className="btn-ui btn-ui-primary btn-ui-block"
                             onClick={submitResolution}
                             disabled={submitting || (resolutionMode === 'escalate' && !escalateGroup.trim())}
                         >
@@ -512,7 +510,7 @@ function GradeReport({ data }) {
                 {feedback && (
                     <div className="mb-3">
                         <div className="hd-grade-section-label">Feedback</div>
-                        <p className="text-muted" style={{ fontSize: '0.9rem' }}>{feedback}</p>
+                        <p className="hd-grade-feedback">{feedback}</p>
                     </div>
                 )}
                 {(rubric || items) && (
