@@ -1,27 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Header() {
+    const { pathname } = useLocation();
+    const navLink = (to, label) => (
+        <Link className={`nav-link${pathname === to ? ' nav-link-active' : ''}`} to={to}>
+            {label}
+        </Link>
+    );
+
     return (
         <header className="site-hero">
             <div className="hero-inner">
                 <div className="hero-brand">
-                    <p className="hero-kicker">Indie tinkering & espresso-fueled experiments</p>
-                    <h1 className="site-title">Will Code for Coffee</h1>
+                    {/* <p className="hero-kicker">Will Code for Coffee</p> */}
+                    <h1 className="site-title">Jared Ekenstam</h1>
                     <p className="hero-subtitle">
-                        A hub for servers, prototypes, and whatever else keeps me entertained.
+                        Tech enthusiast building backend systems, containerized infrastructure, and hands-on IT tooling.
                     </p>
                 </div>
                 <nav className="hero-nav">
-                    <Link className="nav-link" to="/about">
-                        About
-                    </Link>
-                    <Link className="nav-link" to="/games">
-                        Games
-                    </Link>
-                    <Link className="nav-link" to="/apps">
-                        Apps
-                    </Link>
+                    {navLink('/about', 'About')}
+                    {navLink('/games', 'Games')}
+                    {navLink('/helpdesk', 'Helpdesk')}
                 </nav>
             </div>
         </header>

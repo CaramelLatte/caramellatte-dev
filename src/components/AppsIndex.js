@@ -26,7 +26,7 @@ function AppsIndex() {
                 <section className="apps-hero text-center">
                     <p className="apps-kicker">Labs & Sidequests</p>
                     <h2 className="display-6">Self-Hosted Cloud</h2>
-                    <p className="text-muted mb-0">Xpra-powered sandboxes. Games, productivity apps, and whatever else I can coerce into a container. The cards below are placeholder, and just represent some ideas about what this dashboard may hold in the future</p>
+                    <p className="text-muted mb-0">A planned dashboard for self-hosted Xpra sandboxes - games, productivity tools, and other experiments. The cards below are upcoming ideas; nothing is deployed here yet.</p>
                 </section>
 
                 <div className="row g-4 apps-grid">
@@ -39,7 +39,7 @@ function AppsIndex() {
                                         <span className="apps-pill">{app.status}</span>
                                     </div>
                                     <p className="text-muted mb-3">{app.description}</p>
-                                    <div className="small text-muted fst-italic">Slots open soon—ping me if you want early access.</div>
+                                    <div className="small text-muted fst-italic">Slots open soon-ping me if you want early access.</div>
                                 </div>
                             </div>
                         </div>

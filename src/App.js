@@ -3,7 +3,9 @@ import About from './components/AboutComponent';
 import AppsIndex from './components/AppsIndex';
 import Header from './components/HeaderComponent';
 import Games from './components/GamesComponent';
-import RetroarchApp from './components/RetroarchApp';
+import Helpdesk from './components/HelpdeskComponent';
+import BlogList from './components/BlogComponent';
+import BlogPost from './components/BlogPostComponent';
 import "./app.css"
 
 
@@ -17,7 +19,9 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/games" element={<Games />} />
               <Route path="/apps" element={<AppsIndex />} />
-              <Route path="/apps/retroarch" element={<RetroarchApp />} />
+              <Route path="/helpdesk" element={<Helpdesk />} />
+              <Route path="/blog" element={<BlogList />} />
+              <Route path="/blog/:postId" element={<BlogPost />} />
               <Route path="*" element={<Navigate to="/about" replace />}/>
             </Routes>
           </main>

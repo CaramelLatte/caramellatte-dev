@@ -8,7 +8,7 @@ function Games() {
 
         useEffect(() => {
             function fetchGames() {
-                    fetch('https://games.caramellatte.dev:8080/update')
+                    fetch('https://games.caramellatte.dev:5002/update')
                     .then(response => response.json())
                     .then (data => {
                         setGames(data.games);
@@ -25,7 +25,7 @@ function Games() {
         }, []);
 
         function fetchGameIcons(gameIcon) {
-            return "https://games.caramellatte.dev:8080/image/" + gameIcon;
+            return "https://games.caramellatte.dev:5002/image/" + gameIcon;
         }
 
     function renderGameCards(games) {
@@ -85,28 +85,32 @@ function Games() {
     }
 
     function startServer(game) {
-        fetch(fetch('https://games.caramellatte.dev:8080/' + game.name + '/start'))
+        fetch(fetch('https://games.caramellatte.dev:5002/' + game.name + '/start'))
     }
     function stopServer(game) {
-        fetch(fetch('https://games.caramellatte.dev:8080/' + game.name + '/stop'))
+        fetch(fetch('https://games.caramellatte.dev:5002/' + game.name + '/stop'))
     }
 
     return (
-        <div>
-            <br />
-            <div className='container'>
-                <div className='content'>
-                    This is a control panel for remotely controlling a number of dedicated game servers using docker containers. More features and additional games will be added in the future. Currently, use of this page is unrestricted. Verification will be added later.
-                    <br /><br />
-                    Using this page is simple. You may start or stop any of the servers by clicking the corresponding button (Only one server may be active at a time). The status of the servers will be updated in real time. Once the server you wish to use is online, you may connect to it in your game client using the provided IP address and port in the format "URL:PORT". 
-                    <br /><br />
-                    Note that some games may not require specifying a port, in which case base address will be sufficient. Some games may only allow ipv4 addresses as well, in which case you can find the base IP address by running the command "nslookup games.caramellatte.dev" in your terminal for windows, or "dig games.caramellatte.dev" for linux. This will return the IP address of the server, which you can use in the same "IP:PORT" method.
-                    <br /><br />
-                    If you have any issues or want to see specific games added to this page, you can either contact me directly or send an email to admin@caramellatte.dev.
-                </div>
-                {renderGameCards(games)}
+        <div className="container">
+            <div className="content" style={{ marginBottom: '1.5rem' }}>
+                <p>
+                    Remote control panel for dedicated game servers - each running in its own Docker container.
+                    Start or stop any server, monitor live status, and connect via the listed port.
+                    Only one server runs at a time.
+                </p>
+                <p>
+                    To connect: once a server shows <strong>Online</strong>, use{' '}
+                    <code>games.caramellatte.dev:PORT</code> in your game client. If the game requires a
+                    raw IPv4 address, run <code>nslookup games.caramellatte.dev</code> (Windows) or{' '}
+                    <code>dig games.caramellatte.dev</code> (Linux/Mac) to resolve it.
+                </p>
+                <p style={{ marginBottom: 0 }}>
+                    Game requests or issues?{' '}
+                    <a href="mailto:admin@caramellatte.dev">admin@caramellatte.dev</a>
+                </p>
             </div>
-
+            {renderGameCards(games)}
         </div>
     );
 }
