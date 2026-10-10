@@ -10,9 +10,10 @@ app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
 
 // Proxy /api to the ticketing sim on port 5001
-app.use("/api", createProxyMiddleware({
+app.use(createProxyMiddleware({
   target: "http://127.0.0.1:5001",
   changeOrigin: true,
+  pathFilter: "/api",
 }));
 
 app.use(express.static(publicPath));
