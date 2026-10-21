@@ -2,11 +2,37 @@ import React, { useState, useEffect } from 'react';
 
 const API = 'https://games.caramellatte.dev';
 
+const BUSY = ['pulling', 'starting', 'stopping'];
+
+// Older API builds only send `status` (running or not), so fall back to that.
+function gameState(game) {
+    return game.state || (game.status ? 'running' : 'stopped');
+}
+
+function statusLabel(game) {
+    switch (gameState(game)) {
+        case 'running':
+            return 'Online';
+        case 'pulling':
+            return `${game.detail || 'Downloading Docker image'}${game.progress != null ? ` ${game.progress}%` : ''}`;
+        case 'starting':
+            return game.detail ? `${game.detail}…` : 'Starting…';
+        case 'stopping':
+            return 'Stopping…';
+        case 'error':
+            return game.detail || 'Error';
+        default:
+            return 'Offline';
+    }
+}
+
 function Games() {
     const [games, setGames] = useState([]);
     const [playercount, setPlayercount] = useState(0);
     const [playerlist, setPlayerlist] = useState([]);
     const [loadState, setLoadState] = useState('loading');   // 'loading' | 'ok' | 'error'
+    const [pending, setPending] = useState({});   // game name -> true while its start/stop request is in flight
+    const [notices, setNotices] = useState({});   // game name -> message from a rejected request
 
     useEffect(() => {
         function fetchGames() {
@@ -28,12 +54,24 @@ function Games() {
         return () => clearInterval(intervalID);
     }, []);
 
-    function startServer(game) {
-        fetch(API + '/' + game.name + '/start');
+    function sendCommand(game, cmd) {
+        setPending(p => ({ ...p, [game.name]: true }));
+        setNotices(n => ({ ...n, [game.name]: null }));
+        fetch(API + '/' + game.name + '/' + cmd)
+            .then(response => response.json().then(data => ({ ok: response.ok, data })))
+            .then(({ ok, data }) => {
+                if (!ok) {
+                    setNotices(n => ({ ...n, [game.name]: data.error || `Couldn't ${cmd} the server.` }));
+                } else if (data.state) {
+                    // Show the new state now rather than waiting for the next poll.
+                    setGames(gs => gs.map(g => (g.name === game.name ? { ...g, state: data.state, detail: '', progress: null } : g)));
+                }
+            })
+            .catch(() => setNotices(n => ({ ...n, [game.name]: "Couldn't reach the server host." })))
+            .finally(() => setPending(p => ({ ...p, [game.name]: false })));
     }
-    function stopServer(game) {
-        fetch(API + '/' + game.name + '/stop');
-    }
+
+    const anotherActive = name => games.some(g => g.name !== name && (gameState(g) === 'running' || BUSY.includes(gameState(g))));
 
     return (
         <div className="container">
@@ -43,7 +81,7 @@ function Games() {
                 <p className="page-lede">
                     A control panel for dedicated game servers, each running in its own Docker container. Start or
                     stop a server, watch its status update live, and connect on the listed port. Only one server runs
-                    at a time.
+                    at a time. The first start of a game downloads its Docker image, which can take several minutes.
                 </p>
             </header>
 
@@ -71,9 +109,12 @@ function Games() {
             {loadState === 'ok' && (
                 <div className="server-grid">
                     {games.map((game, index) => {
-                        const online = game.status === true;
+                        const state = gameState(game);
+                        const online = state === 'running';
+                        const busy = BUSY.includes(state) || pending[game.name];
+                        const statusClass = online ? 'status-on' : BUSY.includes(state) ? 'status-busy' : state === 'error' ? 'status-error' : 'status-off';
                         return (
-                            <article className={`server${online ? ' is-online' : ''}`} key={index}>
+                            <article className={`server${online ? ' is-online' : ''}${BUSY.includes(state) ? ' is-busy' : ''}`} key={index}>
                                 <div className="server-top">
                                     <img
                                         className="server-icon"
@@ -82,9 +123,9 @@ function Games() {
                                     />
                                     <div className="server-id">
                                         <h2 className="server-name">{game.name}</h2>
-                                        <span className={`status ${online ? 'status-on' : 'status-off'}`}>
+                                        <span className={`status ${statusClass}`} role="status">
                                             <span className="status-dot" />
-                                            {online ? 'Online' : 'Offline'}
+                                            {statusLabel(game)}
                                         </span>
                                     </div>
                                 </div>
@@ -98,14 +139,23 @@ function Games() {
                                         <dd>{online ? playercount || 0 : '-'}</dd>
                                     </div>
                                 </dl>
+                                {state === 'pulling' && game.progress != null && (
+                                    <div className="server-progress" role="progressbar" aria-label={`${game.name} download`}
+                                        aria-valuemin={0} aria-valuemax={100} aria-valuenow={game.progress}>
+                                        <div className="server-progress-bar" style={{ width: `${game.progress}%` }} />
+                                    </div>
+                                )}
+                                {notices[game.name] && <p className="server-notice">{notices[game.name]}</p>}
                                 {online && playerlist.length > 0 && (
                                     <p className="server-players">{playerlist.join(', ')}</p>
                                 )}
                                 <div className="server-actions">
-                                    <button className="btn-ui btn-ui-sm" onClick={() => startServer(game)} disabled={online}>
+                                    <button className="btn-ui btn-ui-sm" onClick={() => sendCommand(game, 'start')}
+                                        disabled={online || busy || anotherActive(game.name)}>
                                         Start
                                     </button>
-                                    <button className="btn-ui btn-ui-sm btn-ui-danger" onClick={() => stopServer(game)}>
+                                    <button className="btn-ui btn-ui-sm btn-ui-danger" onClick={() => sendCommand(game, 'stop')}
+                                        disabled={!online || busy}>
                                         Stop
                                     </button>
                                 </div>

@@ -475,6 +475,26 @@ code {
   color: var(--text-subtle);
 }
 
+.status-busy {
+  color: var(--accent);
+}
+
+.status-busy .status-dot {
+  animation: status-blink 1.2s ease-in-out infinite;
+}
+
+.status-error {
+  color: var(--danger);
+}
+
+@keyframes status-blink {
+  50% { opacity: 0.25; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-busy .status-dot { animation: none; }
+}
+
 /* ─── About ────────────────────────────────────────────────────────────────── */
 
 .intro {
@@ -700,6 +720,31 @@ code {
   margin: 0;
   font-weight: 600;
   font-size: 0.95rem;
+}
+
+.server.is-busy {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+.server-progress {
+  height: 6px;
+  margin-top: -0.25rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.server-progress-bar {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.4s ease;
+}
+
+.server-notice {
+  font-size: 0.85rem;
+  color: var(--danger);
+  margin: -0.25rem 0 0;
 }
 
 .server-players {
