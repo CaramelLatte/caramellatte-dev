@@ -37,10 +37,16 @@ function BlogPost() {
                 <h1 className="blog-post-title">{post.title}</h1>
                 <span className="blog-card-date">{formatDate(post.date)}</span>
             </div>
-            {/* body is a plain string for now - swap for <ReactMarkdown>{post.body}</ReactMarkdown> when ready */}
-            <div className="blog-prose">
-                {post.body}
-            </div>
+            {/* body: a plain string (pre-line prose) or a component for posts with figures */}
+            {typeof post.body === 'function' ? (
+                <article className="blog-prose blog-prose-rich">
+                    <post.body />
+                </article>
+            ) : (
+                <div className="blog-prose">
+                    {post.body}
+                </div>
+            )}
         </div>
     );
 }

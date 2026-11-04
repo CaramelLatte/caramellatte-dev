@@ -1,3 +1,5 @@
+import HelpdeskSimulatorPost from './helpdeskSimulator';
+
 export const TAGS = {
     ctf: 'CTF',
     cybersecurity: 'Cybersecurity',
@@ -9,5 +11,16 @@ export const TAGS = {
 };
 
 // Each post: { id, title, date, tags, summary, body }
-// body is a string for now — swap the render in BlogPostComponent for <ReactMarkdown> when ready.
-export const posts = [];
+// body: a plain string (rendered as pre-line prose) or a component (for figures, headings, code).
+// Newest first.
+export const posts = [
+    {
+        id: 'helpdesk-simulator',
+        title: 'Building an AI help desk simulator on my home server',
+        date: '2026-11-03T12:00:00',
+        tags: ['project', 'homelab', 'it-concepts'],
+        summary: 'A walkthrough of one complete ticket: an AI-played user, a shell to diagnose a DNS fault, '
+            + 'and a local model that grades the work. Plus what runs underneath.',
+        body: HelpdeskSimulatorPost,
+    },
+];

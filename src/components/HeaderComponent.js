@@ -5,6 +5,7 @@ const NAV = [
     { to: '/about', label: 'About' },
     { to: '/games', label: 'Game Servers' },
     { to: '/helpdesk', label: 'Helpdesk Sim' },
+    { to: '/blog', label: 'Blog' },
 ];
 
 function Header() {

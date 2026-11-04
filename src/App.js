@@ -4,7 +4,7 @@ import AppsIndex from './components/AppsIndex';
 import Header from './components/HeaderComponent';
 import Footer from './components/FooterComponent';
 import Games from './components/GamesComponent';
-import Helpdesk from './components/HelpdeskComponent';
+import HelpdeskGate from './components/HelpdeskGate';
 import Desktop from './components/DesktopComponent';
 import BlogList from './components/BlogComponent';
 import BlogPost from './components/BlogPostComponent';
@@ -21,7 +21,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/games" element={<Games />} />
               <Route path="/apps" element={<AppsIndex />} />
-              <Route path="/helpdesk" element={<Helpdesk />} />
+              <Route path="/helpdesk" element={<HelpdeskGate />} />
               <Route path="/desktop" element={<Desktop />} />
               <Route path="/blog" element={<BlogList />} />
               <Route path="/blog/:postId" element={<BlogPost />} />
