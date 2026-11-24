@@ -11,6 +11,16 @@ const DEFAULT_LABELS = {
     customer_service: 'Customer service',
 };
 
+// Full: chat with the AI user, ticket in Zammad, graded at close.
+// Practice: written brief, no chat or ticket, instant pass/fail check, AI grade on request.
+const MODE_KEY = 'hd-mode';
+function loadMode() {
+    try { return localStorage.getItem(MODE_KEY) === 'practice' ? 'practice' : 'full'; } catch { return 'full'; }
+}
+function saveMode(m) {
+    try { localStorage.setItem(MODE_KEY, m); } catch { /* private window etc. */ }
+}
+
 // Scenario entries come from /api/catalog (rich) or /api/scenarios (ids only).
 function toEntry(s) {
     if (typeof s === 'string') {
@@ -21,6 +31,10 @@ function toEntry(s) {
 
 function Helpdesk() {
     const [phase, setPhase] = useState('pick');       // 'pick' | 'active' | 'graded'
+    const [mode, setModeState] = useState(loadMode);  // chosen on the picker for the next session
+    const [ticketMode, setTicketMode] = useState('full');  // mode of the running session
+    const [brief, setBrief] = useState(null);         // practice mode: the ticket as written
+    const [grading, setGrading] = useState(false);    // practice mode: AI grade requested
     const [scenarios, setScenarios] = useState([]);
     const [selected, setSelected] = useState(null);
     const [ticketId, setTicketId] = useState(null);
@@ -73,11 +87,16 @@ function Helpdesk() {
             .catch(() => {});
     }, []);
 
+    const setMode = (m) => { setModeState(m); saveMode(m); };
+    const practice = ticketMode === 'practice';
+
     // Start polling when active
     useEffect(() => {
         if (phase !== 'active' || !ticketId) return;
-        fetchThread(ticketId);
-        pollThreadRef.current = setInterval(() => fetchThread(ticketId), POLL_INTERVAL);
+        if (!practice) {   // practice sessions have no conversation
+            fetchThread(ticketId);
+            pollThreadRef.current = setInterval(() => fetchThread(ticketId), POLL_INTERVAL);
+        }
         if (!lab) {
             fetchShellLog(ticketId);
             pollShellRef.current = setInterval(() => fetchShellLog(ticketId), POLL_INTERVAL);
@@ -86,7 +105,7 @@ function Helpdesk() {
             clearInterval(pollThreadRef.current);
             clearInterval(pollShellRef.current);
         };
-    }, [phase, ticketId, lab, fetchThread, fetchShellLog]);
+    }, [phase, ticketId, lab, practice, fetchThread, fetchShellLog]);
 
     useEffect(() => {
         threadEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -104,12 +123,14 @@ function Helpdesk() {
             const res = await fetch('/api/tickets', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ scenario_id: selected.id }),
+                body: JSON.stringify({ scenario_id: selected.id, mode }),
             });
             const data = await res.json().catch(() => ({}));
             if (!res.ok) throw new Error(data.error || 'Bad response');
             const id = data.ticket_id;
             setTicketId(id);
+            setTicketMode(data.mode ?? 'full');
+            setBrief(data.brief ?? null);
             setLab(data.lab ?? null);
             setConsoleTab(data.lab?.consoles?.terminal ? 'terminal' : 'gui');
             if (!data.lab) {
@@ -183,16 +204,32 @@ function Helpdesk() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ notes: closeNotes, resolution_notes: closeNotes }),
             });
-            if (!res.ok) throw new Error('Close failed');
-            const data = await res.json();
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data.error || 'Close failed');
             clearInterval(pollThreadRef.current);
             clearInterval(pollShellRef.current);
             setGrade(data);
             setPhase('graded');
-        } catch {
-            setError('Failed to submit resolution.');
+        } catch (e) {
+            setError(`Failed to submit resolution${e?.message ? `: ${e.message}` : '.'}`);
         } finally {
             setSubmitting(false);
+        }
+    };
+
+    // Practice mode: send the finished attempt to the grading model.
+    const requestGrade = async () => {
+        setGrading(true);
+        setError(null);
+        try {
+            const res = await fetch(`/api/tickets/${ticketId}/grade`, { method: 'POST' });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data.error || 'Grading failed');
+            setGrade(data);
+        } catch (e) {
+            setError(`Could not get a grade: ${e.message}`);
+        } finally {
+            setGrading(false);
         }
     };
 
@@ -201,6 +238,9 @@ function Helpdesk() {
         setSelected(null);
         setTicketId(null);
         setLab(null);
+        setTicketMode('full');
+        setBrief(null);
+        setGrading(false);
         setThread([]);
         setShellLog([]);
         setMessageInput('');
@@ -229,24 +269,49 @@ function Helpdesk() {
                         </p>
                     </header>
 
+                    <div className="hd-mode mb-4">
+                        <div className="hd-panel-label">Mode</div>
+                        <div className="hd-resolution-toggle hd-mode-toggle mb-2" role="group" aria-label="Session mode">
+                            <button
+                                className={`hd-toggle-btn ${mode === 'full' ? 'active' : ''}`}
+                                aria-pressed={mode === 'full'}
+                                onClick={() => setMode('full')}
+                            >
+                                Full simulation
+                            </button>
+                            <button
+                                className={`hd-toggle-btn ${mode === 'practice' ? 'active' : ''}`}
+                                aria-pressed={mode === 'practice'}
+                                onClick={() => setMode('practice')}
+                            >
+                                Technical practice
+                            </button>
+                        </div>
+                        <p className="hd-notice hd-notice-sm mb-0">
+                            {mode === 'full'
+                                ? 'A ticket with an AI end user to talk to, graded by the AI at the end.'
+                                : 'No user and no ticket: a written brief, the machine, and an instant pass/fail check at the end. The AI grade is optional.'}
+                        </p>
+                    </div>
+
                     <div className="hd-howto mb-4">
                         <ol className="hd-howto-steps">
-                            <li className="hd-howto-step">
-                                <span className="hd-howto-num">1</span>
-                                <span>Read the user's opening message to understand the issue.</span>
-                            </li>
-                            <li className="hd-howto-step">
-                                <span className="hd-howto-num">2</span>
-                                <span>Investigate on the machine: a real terminal, and the user's desktop for some tickets.</span>
-                            </li>
-                            <li className="hd-howto-step">
-                                <span className="hd-howto-num">3</span>
-                                <span>Reply in the Conversation panel. The AI persona responds and notices when things are fixed.</span>
-                            </li>
-                            <li className="hd-howto-step">
-                                <span className="hd-howto-num">4</span>
-                                <span>Close or escalate, write resolution notes, and submit for grading.</span>
-                            </li>
+                            {(mode === 'full' ? [
+                                "Read the user's opening message to understand the issue.",
+                                "Investigate on the machine: a real terminal, and the user's desktop for some tickets.",
+                                'Reply in the Conversation panel. The AI persona responds and notices when things are fixed.',
+                                'Close or escalate, write resolution notes, and submit for grading.',
+                            ] : [
+                                'Read the brief: the ticket as filed and what the user would tell you.',
+                                "Investigate and fix on the machine: a real terminal, and the user's desktop for some tickets.",
+                                'Close or escalate and write your notes.',
+                                'See the pass/fail checks right away, then ask the AI for a grade and feedback if you want one.',
+                            ]).map((text, i) => (
+                                <li className="hd-howto-step" key={i}>
+                                    <span className="hd-howto-num">{i + 1}</span>
+                                    <span>{text}</span>
+                                </li>
+                            ))}
                         </ol>
                     </div>
 
@@ -289,15 +354,19 @@ function Helpdesk() {
 
                     <div className="hd-start-bar mt-4">
                         <p className="hd-notice mb-0">
-                            Runs on self-hosted hardware with a local LLM. Starting a machine and persona replies can
-                            take <strong>15–45 seconds</strong>.
+                            {mode === 'full'
+                                ? <>Runs on self-hosted hardware with a local LLM. Starting a machine and persona replies can
+                                    take <strong>15–45 seconds</strong>.</>
+                                : <>Practice mode makes no AI calls until you ask for a grade. Live machines take
+                                    about <strong>15 seconds</strong> to start.</>}
                         </p>
                         <button
                             className="btn-ui btn-ui-primary"
                             disabled={!selected || starting}
                             onClick={startSession}
                         >
-                            {starting ? (selected?.kind === 'lab' ? 'Preparing machine…' : 'Starting…') : 'Start session'}
+                            {starting ? (selected?.kind === 'lab' ? 'Preparing machine…' : 'Starting…')
+                                : mode === 'practice' ? 'Start practice' : 'Start session'}
                         </button>
                     </div>
                 </div>
@@ -310,14 +379,39 @@ function Helpdesk() {
             <div className="hd-page container-fluid py-4">
                 <div className="hd-inner mx-auto">
                     <header className="page-header">
-                        <p className="eyebrow">Session complete</p>
-                        <h1 className="page-title">Grading report</h1>
-                        <p className="page-lede">Ticket #{ticketId} · {selected?.title}</p>
+                        <p className="eyebrow">{practice ? 'Practice complete' : 'Session complete'}</p>
+                        <h1 className="page-title">{grade?.grading ? 'Grading report' : 'Result'}</h1>
+                        <p className="page-lede">
+                            {practice ? 'Practice' : 'Ticket'} #{ticketId} · {selected?.title}
+                        </p>
                     </header>
 
-                    <div className="hd-grade-card">
-                        <GradeReport data={grade} />
-                    </div>
+                    {error && <div className="hd-error mb-3">{error}</div>}
+
+                    {grade?.check && (
+                        <div className="hd-grade-card mb-3">
+                            <CheckReport check={grade.check} data={grade} />
+                        </div>
+                    )}
+
+                    {grade?.grading ? (
+                        <div className="hd-grade-card">
+                            <GradeReport data={grade} />
+                        </div>
+                    ) : practice && (
+                        <div className="hd-panel">
+                            <div className="hd-panel-label">AI grade</div>
+                            <p className="hd-notice hd-notice-sm mb-3">
+                                Send your commands{lab ? ', the machine report' : ''}, your resolution and your notes to
+                                the grading model for scores and specific feedback on the technical work. Takes about
+                                20–60 seconds.
+                            </p>
+                            <button className="btn-ui btn-ui-primary" onClick={requestGrade} disabled={grading}>
+                                {grading && <span className="hd-spinner" />}
+                                {grading ? 'Grading…' : 'Get AI grade & feedback'}
+                            </button>
+                        </div>
+                    )}
 
                     <div className="mt-4">
                         <button className="btn-ui btn-ui-primary" onClick={reset}>
@@ -331,12 +425,18 @@ function Helpdesk() {
 
     // phase === 'active'
     const access = lab?.access ?? {};
+    // Full mode keeps its original layout. Practice has no chat, so the brief and the resolution
+    // share a narrow left column and the machine gets the room.
+    const leftCol = practice ? (lab ? 'col-xl-4' : 'col-lg-5') : (lab ? 'col-xl-5' : 'col-lg-7');
+    const rightCol = practice ? (lab ? 'col-xl-8' : 'col-lg-7') : (lab ? 'col-xl-7' : 'col-lg-5');
+    const resolutionLeft = practice || !!lab;
     return (
         <div className="hd-active py-3">
             <div className="hd-ticketbar mb-3">
                 <div className="d-flex align-items-center gap-3 flex-wrap">
-                    <span className="hd-ticket-id">Ticket #{ticketId}</span>
+                    <span className="hd-ticket-id">{practice ? 'Practice' : 'Ticket'} #{ticketId}</span>
                     <span className="hd-ticketbar-name">{selected?.title}</span>
+                    {practice && <span className="hd-pill">Practice</span>}
                     {lab && access.terminal && (
                         <span className="hd-pill hd-pill-live">
                             {access.terminal.user}@{access.terminal.hostname} · sudo
@@ -347,16 +447,21 @@ function Helpdesk() {
             </div>
 
             <p className="hd-notice hd-notice-sm mb-3">
-                {lab
-                    ? 'This is a real, disposable machine. Everything you do on it, and its final state, is used for grading. Persona replies can take 15–45 seconds.'
-                    : 'Running on self-hosted hardware with a local LLM. Persona replies and grading can take 15–45 seconds.'}
+                {practice
+                    ? (lab
+                        ? 'This is a real, disposable machine. Its final state and everything you run decide the pass/fail check.'
+                        : 'Practice mode: commands you run decide the pass/fail check.')
+                    : lab
+                        ? 'This is a real, disposable machine. Everything you do on it, and its final state, is used for grading. Persona replies can take 15–45 seconds.'
+                        : 'Running on self-hosted hardware with a local LLM. Persona replies and grading can take 15–45 seconds.'}
             </p>
 
             {error && <div className="hd-error mb-3">{error}</div>}
 
             <div className="row g-3">
-                {/* Conversation + resolution */}
-                <div className={`col-12 ${lab ? 'col-xl-5' : 'col-lg-7'} d-flex flex-column gap-3`}>
+                {/* Conversation (or the practice brief) + resolution */}
+                <div className={`col-12 ${leftCol} d-flex flex-column gap-3`}>
+                    {practice ? <BriefPanel brief={brief} /> : (
                     <div className="hd-panel hd-thread-panel flex-grow-1 d-flex flex-column">
                         <div className="hd-panel-label">Conversation</div>
                         <div className="hd-thread flex-grow-1">
@@ -391,9 +496,10 @@ function Helpdesk() {
                             </div>
                         </div>
                     </div>
+                    )}
 
-                    {lab && (
-                        <ResolutionPanel
+                    {resolutionLeft && (
+                        <ResolutionPanel practice={practice}
                             resolutionMode={resolutionMode} setResolutionMode={setResolutionMode}
                             escalateGroup={escalateGroup} setEscalateGroup={setEscalateGroup}
                             closeNotes={closeNotes} setCloseNotes={setCloseNotes}
@@ -403,7 +509,7 @@ function Helpdesk() {
                 </div>
 
                 {/* Machine consoles (lab) or the simulated shell */}
-                <div className={`col-12 ${lab ? 'col-xl-7' : 'col-lg-5'} d-flex flex-column gap-3`}>
+                <div className={`col-12 ${rightCol} d-flex flex-column gap-3`}>
                     {lab ? (
                         <div className="hd-panel hd-console-panel d-flex flex-column">
                             <div className="d-flex justify-content-between align-items-center mb-2">
@@ -481,12 +587,14 @@ function Helpdesk() {
                                     <button className="hd-btn-run" onClick={runCommand}>Run</button>
                                 </div>
                             </div>
-                            <ResolutionPanel
-                                resolutionMode={resolutionMode} setResolutionMode={setResolutionMode}
-                                escalateGroup={escalateGroup} setEscalateGroup={setEscalateGroup}
-                                closeNotes={closeNotes} setCloseNotes={setCloseNotes}
-                                submitting={submitting} submitResolution={submitResolution}
-                            />
+                            {!resolutionLeft && (
+                                <ResolutionPanel
+                                    resolutionMode={resolutionMode} setResolutionMode={setResolutionMode}
+                                    escalateGroup={escalateGroup} setEscalateGroup={setEscalateGroup}
+                                    closeNotes={closeNotes} setCloseNotes={setCloseNotes}
+                                    submitting={submitting} submitResolution={submitResolution}
+                                />
+                            )}
                         </>
                     )}
                 </div>
@@ -495,7 +603,7 @@ function Helpdesk() {
     );
 }
 
-function ResolutionPanel({ resolutionMode, setResolutionMode, escalateGroup, setEscalateGroup,
+function ResolutionPanel({ practice, resolutionMode, setResolutionMode, escalateGroup, setEscalateGroup,
                            closeNotes, setCloseNotes, submitting, submitResolution }) {
     return (
         <div className="hd-panel hd-resolution-panel">
@@ -541,8 +649,10 @@ function ResolutionPanel({ resolutionMode, setResolutionMode, escalateGroup, set
             >
                 {submitting && <span className="hd-spinner" />}
                 {submitting
-                    ? 'Grading... this may take a moment…'
-                    : resolutionMode === 'close' ? 'Submit & Grade' : 'Escalate & Grade'}
+                    ? (practice ? 'Checking…' : 'Grading... this may take a moment…')
+                    : practice
+                        ? (resolutionMode === 'close' ? 'Close & check' : 'Escalate & check')
+                        : (resolutionMode === 'close' ? 'Submit & Grade' : 'Escalate & Grade')}
             </button>
         </div>
     );
@@ -582,7 +692,6 @@ function GradeReport({ data }) {
     const g = data.grading ?? {};
     const labels = g.rubric_labels ?? DEFAULT_LABELS;
     const path = data.resolution_path;
-    const labInfo = data.lab;
 
     return (
         <div className="hd-grade-body">
@@ -593,16 +702,11 @@ function GradeReport({ data }) {
                 </div>
             )}
 
-            {path && (
+            {/* Outcome, machine checks and debrief are in CheckReport. Older responses without a check: */}
+            {!data.check && path && (
                 <div className="mb-3">
                     <div className="hd-grade-section-label">Outcome</div>
                     <p className="hd-grade-feedback mb-1">{path.label}</p>
-                    <small className="hd-hint">
-                        {data.zammad_group && data.zammad_group !== 'Users'
-                            ? `Escalated to ${data.zammad_group}`
-                            : `Ticket ${data.zammad_state ?? ''}`}
-                        {path.score_modifier !== undefined && ` · credit ${Math.round(path.score_modifier * 100)}%`}
-                    </small>
                 </div>
             )}
 
@@ -625,32 +729,83 @@ function GradeReport({ data }) {
                 </div>
             )}
 
-            {labInfo?.checks?.length > 0 && (
-                <div className="mb-3">
-                    <div className="hd-grade-section-label">What the machine showed</div>
+        </div>
+    );
+}
+
+// Practice mode's stand-in for the conversation: the ticket as filed and what the user would say if asked.
+function BriefPanel({ brief }) {
+    if (!brief) return null;
+    const r = brief.reporter ?? {};
+    const who = [r.name, r.title].filter(Boolean).join(', ');
+    const ids = [r.username && `user ${r.username}`, r.employee_id && `ID ${r.employee_id}`, r.hostname && `machine ${r.hostname}`]
+        .filter(Boolean).join(' · ');
+    return (
+        <div className="hd-panel hd-brief">
+            <div className="hd-panel-label">Ticket brief</div>
+            <h2 className="hd-brief-subject">{brief.subject}</h2>
+            {(who || ids) && <p className="hd-hint mb-2">{who}{who && ids ? ' · ' : ''}{ids}</p>}
+            {brief.voice === 'user_brief' && (
+                <p className="hd-hint mb-1">The user's situation (written to the simulated user):</p>
+            )}
+            <p className="hd-brief-body">{brief.body}</p>
+            {brief.facts?.length > 0 && (
+                <>
+                    <div className="hd-grade-section-label mt-3">What the user would tell you if asked</div>
+                    <ul className="hd-brief-facts">
+                        {brief.facts.map((f, i) => <li key={i}>{f}</li>)}
+                    </ul>
+                </>
+            )}
+        </div>
+    );
+}
+
+function fmtElapsed(sec) {
+    if (sec == null) return null;
+    const m = Math.floor(sec / 60), s = sec % 60;
+    return m ? `${m}m ${s}s` : `${s}s`;
+}
+
+// Programmatic pass/fail: the same outcome the grader is told is authoritative, with no model involved.
+function CheckReport({ check, data }) {
+    const o = check.outcome ?? {};
+    const elapsed = fmtElapsed(check.elapsed_seconds);
+    const action = data.zammad_group && data.zammad_group !== 'Users'
+        ? `Escalated to ${data.zammad_group}`
+        : data.zammad_state === 'closed' ? 'Closed' : `Left ${data.zammad_state ?? 'open'}`;
+    return (
+        <div className="hd-grade-body">
+            <div className={`hd-check-verdict ${check.passed ? 'hd-check-pass' : 'hd-check-fail'}`}>
+                <span className="hd-check-word">{check.passed ? 'PASS' : 'FAIL'}</span>
+                <span className="hd-check-detail">
+                    {o.label}
+                    <small className="hd-hint d-block">
+                        {action} · credit {Math.round((o.score ?? 0) * 100)}% (pass at {Math.round(check.pass_score * 100)}%)
+                        {elapsed && ` · ${elapsed}`}
+                    </small>
+                </span>
+            </div>
+
+            {check.items?.length > 0 && (
+                <div>
+                    <div className="hd-grade-section-label">Checks</div>
                     <ul className="hd-rubric-list">
-                        {labInfo.checks.map((c, i) => {
-                            const broke = c.kind === 'guard' && c.before && !c.after;
-                            const fixed = c.kind !== 'guard' && !c.before && c.after;
-                            const cls = broke ? 'hd-rubric-fail' : (c.after ? 'hd-rubric-pass' : '');
-                            return (
-                                <li key={i} className={`hd-rubric-item ${cls}`}>
-                                    <span className="hd-rubric-criterion">{c.desc}</span>
-                                    <span className="hd-rubric-pts">
-                                        {broke ? 'broken by you' : fixed ? 'fixed' : c.after ? 'OK' : 'still failing'}
-                                    </span>
-                                </li>
-                            );
-                        })}
+                        {check.items.map((it, i) => (
+                            <li key={i} className={`hd-rubric-item ${it.ok ? 'hd-rubric-pass' : 'hd-rubric-fail'}`}>
+                                <span className="hd-rubric-criterion">{it.label}</span>
+                                <span className="hd-rubric-pts">{it.status}</span>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             )}
 
-            {labInfo?.debrief && (
-                <div className="mb-3">
-                    <div className="hd-grade-section-label">What was actually wrong</div>
-                    <p className="hd-grade-feedback">{labInfo.debrief}</p>
-                </div>
+            {check.debrief && (
+                <details className="hd-debrief">
+                    <summary className="hd-grade-section-label">What was actually wrong</summary>
+                    <p className="hd-grade-feedback mt-2">{check.debrief}</p>
+                </details>
             )}
         </div>
     );

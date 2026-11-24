@@ -1689,3 +1689,75 @@ code {
     min-height: 320px;
   }
 }
+
+/* Helpdesk: practice mode (mode switch, brief, pass/fail check) */
+.hd-mode-toggle {
+  max-width: 26rem;
+}
+
+.hd-brief-subject {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+.hd-brief-body {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+.hd-brief-facts {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  padding-left: 1.1rem;
+  margin: 0;
+}
+
+.hd-brief-facts li + li {
+  margin-top: 0.25rem;
+}
+
+.hd-check-verdict {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-left-width: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.hd-check-pass {
+  border-left-color: var(--success);
+}
+
+.hd-check-fail {
+  border-left-color: var(--danger);
+}
+
+.hd-check-word {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.hd-check-pass .hd-check-word {
+  color: var(--success);
+}
+
+.hd-check-fail .hd-check-word {
+  color: var(--danger);
+}
+
+.hd-check-detail {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.hd-debrief summary {
+  cursor: pointer;
+  margin-bottom: 0;
+}
