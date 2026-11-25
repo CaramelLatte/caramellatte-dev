@@ -19,7 +19,7 @@ export const posts = [
         title: 'Building an AI help desk simulator on my home server',
         date: '2026-11-03T12:00:00',
         tags: ['project', 'homelab', 'it-concepts'],
-        summary: 'A walkthrough of one complete ticket: an AI-played user, a shell to diagnose a DNS fault, '
+        summary: 'A walkthrough of one complete ticket: an AI-played user, a real workstation with a DNS fault, '
             + 'and a local model that grades the work. Plus what runs underneath.',
         body: HelpdeskSimulatorPost,
     },
